@@ -20,9 +20,11 @@
       --map-path: #8b6914;
       --accent: #c8ff3e;
       --logo-bg: #e1d8c0;
+      --bg-deep: #1a1208;
+      --bg-mid: #0f0b05;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #1a1208; font-family: 'Crimson Text', Georgia, serif; color: var(--map-ink); overflow-x: hidden; }
+    body { background: var(--bg-deep); font-family: 'Crimson Text', Georgia, serif; color: var(--map-ink); overflow-x: hidden; }
 
     /* NAV */
     .edu-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2.5rem; background: rgba(26,18,8,0.93); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(200,160,80,0.2); }
@@ -35,8 +37,14 @@
     .edu-nav .nav-cta:hover { opacity: 0.85; }
 
     /* HEADER */
-    .page-header { padding: 8rem 4rem 3rem; text-align: center; position: relative; background: linear-gradient(180deg, #1a1208 0%, #2d1f0e 100%); overflow: hidden; }
-    .page-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 100%, rgba(184,134,11,0.1) 0%, transparent 70%); }
+    .page-header {
+      padding: 8rem 4rem 4rem;
+      text-align: center;
+      position: relative;
+      background: linear-gradient(180deg, #1a1208 0%, #1a1208 60%, transparent 100%);
+      overflow: hidden;
+    }
+    .page-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 100%, rgba(184,134,11,0.12) 0%, transparent 70%); pointer-events:none; }
     .page-header h1 { font-family: 'Cinzel', serif; font-size: clamp(2.5rem, 6vw, 5rem); color: #e8d5b0; font-weight: 700; letter-spacing: 0.15em; text-shadow: 0 2px 20px rgba(184,134,11,0.4); position: relative; }
     .page-header h1 span { color: var(--map-gold); }
     .page-header p { font-family: 'Crimson Text', serif; font-size: 1.15rem; font-style: italic; color: #9a8060; margin-top: 0.75rem; position: relative; }
@@ -44,147 +52,66 @@
     .ornament-line { flex: 1; max-width: 200px; height: 1px; background: linear-gradient(90deg, transparent, var(--map-gold), transparent); }
     .ornament-diamond { width: 10px; height: 10px; background: var(--map-gold); transform: rotate(45deg); }
 
-    /* ── MAP WRAPPER & FEATHERED CONTAINER ── */
-    .map-wrapper {
-      padding: 2rem 2rem 3rem;
-      background: linear-gradient(180deg, #2d1f0e, #1a1208);
-      display: flex;
-      justify-content: center;
+    /* ══════════════════════════════════
+       JOURNEY STREAM — the main layout
+       ══════════════════════════════════ */
+    .journey-stream {
+      position: relative;
+      padding: 0 0 6rem;
+      /* no background — transparent so body color shows through */
     }
 
-    /*
-     * Feathered / smooth-edge map:
-     * We clip the container with a slightly inset rounded rect so the
-     * background image fades naturally instead of having a hard border.
-     * The mask creates a radial-gradient vignette that dissolves the edges.
-     */
-    .map-container {
+    /* ── CONNECTOR: SVG curved path between each card ── */
+    .path-connector {
       position: relative;
       width: 100%;
-      max-width: 1100px;
-      background-image: url('resources/design elements/base_map.png');
-      background-size: cover;
-      background-position: center top;
-      /* Remove hard border — feathering replaces it */
-      border: none;
-      box-shadow: 0 0 80px rgba(184,134,11,0.25);
-      overflow: hidden;
-      border-radius: 8px;
-      /* Feathered edges via CSS mask – smooth dissolve on all sides */
-      -webkit-mask-image: radial-gradient(
-        ellipse 90% 88% at 50% 50%,
-        black 55%,
-        rgba(0,0,0,0.85) 68%,
-        rgba(0,0,0,0.5) 80%,
-        rgba(0,0,0,0.15) 90%,
-        transparent 100%
-      );
-      mask-image: radial-gradient(
-        ellipse 90% 88% at 50% 50%,
-        black 55%,
-        rgba(0,0,0,0.85) 68%,
-        rgba(0,0,0,0.5) 80%,
-        rgba(0,0,0,0.15) 90%,
-        transparent 100%
-      );
+      height: 220px;
+      overflow: visible;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
     }
-    .map-container::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(212,184,150,0.42);
-      pointer-events: none;
-      z-index: 1;
+    .path-connector svg {
+      width: 100%;
+      height: 220px;
+      overflow: visible;
     }
 
-    /*
-     * SVG viewBox is 0 0 1100 460.
-     * All pins and paths have been shifted so the entire
-     * group is visually centred both horizontally and vertically.
-     *
-     * Original pin approximate SVG coords:
-     *   NC  374,105  DB  134,262  MP  508,185  VA  902,157  NP  550,310
-     * Bounding box: x 134–902 (width 768), y 105–310 (height 205)
-     * Centre of bbox: x≈518, y≈207.5
-     * SVG centre: x=550, y=230
-     * Offset to apply: dx=+32, dy=+22.5 ≈ +32, +23
-     *
-     * New coords (rounded):
-     *   NC  406,128  DB  166,285  MP  540,208  VA  934,180  NP  582,333
-     * New bbox: x 166–934 (width 768), y 128–333 (height 205)
-     * New centre: x≈550, y≈230.5  ✓
-     *
-     * Pin CSS positions (left/top) derived from SVG coords / viewBox:
-     *   left = svgX / 1100 * 100 %,  top = svgY px  (pins use absolute px top)
-     *   NC:  left=36.9%, top=101px
-     *   DB:  left=15.1%, top=258px
-     *   MP:  left=49.1%, top=181px
-     *   VA:  left=84.9%, top=153px
-     *   NP:  left=52.9%, top=306px
-     */
-    .map-svg-area { position: relative; z-index: 2; width: 100%; height: 460px; }
-
-    .map-title-box { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 700; color: var(--map-dark); letter-spacing: 0.18em; text-transform: uppercase; border: 2px solid var(--map-dark); padding: 6px 20px; background: rgba(212,184,150,0.92); z-index: 15; text-align: center; white-space: nowrap; box-shadow: 2px 2px 8px rgba(0,0,0,0.2); }
-    .map-title-box small { display: block; font-size: 0.55rem; letter-spacing: 0.12em; font-weight: 400; margin-top: 2px; color: var(--map-path); }
-
-    .map-legend { position: absolute; top: 14px; left: 14px; z-index: 15; font-family: 'Cinzel', serif; font-size: 0.55rem; color: var(--map-dark); border: 1.5px solid var(--map-dark); padding: 6px 10px; background: rgba(212,184,150,0.92); line-height: 1.8; letter-spacing: 0.05em; }
-    .map-legend strong { font-size: 0.6rem; display: block; margin-bottom: 2px; }
-
-    /* Real compass image */
-    .map-compass-img { position: absolute; bottom: 16px; right: 16px; z-index: 10; width: 88px; height: 88px; object-fit: contain; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.35)); opacity: 0.9; }
-
-    /* Sailing ship (top-right decorative) */
-    .map-ship-img { position: absolute; top: 60px; right: 22px; z-index: 5; width: 88px; object-fit: contain; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.22)); opacity: 0.78; }
-
-    /* Lake between VA and NP */
-    .map-lake-img {
-      position: absolute;
-      left: 64%;
-      top: 210px;
-      z-index: 4;
-      width: 145px;
-      object-fit: contain;
-      opacity: 0.48;
-      mix-blend-mode: multiply;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
-    }
-    /* Boat sits on the lake */
-    .map-boat-img {
-      position: absolute;
-      left: 66.5%;
-      top: 240px;
-      z-index: 5;
-      width: 75px;
-      object-fit: contain;
-      opacity: 0.82;
-      mix-blend-mode: multiply;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    /* ── SCENE: wrapper that holds card + decorative elements ── */
+    .scene {
+      position: relative;
+      width: 100%;
+      padding: 0 2rem;
     }
 
-    /* ── LOGO PINS ── */
-    .map-pin { position: absolute; transform: translateX(-50%); cursor: pointer; z-index: 10; transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1); text-align: center; }
-    .map-pin:hover { transform: translateX(-50%) scale(1.12); }
-    .pin-logo { width: 54px; height: 54px; border-radius: 50%; border: 3px solid var(--map-gold); overflow: hidden; margin: 0 auto 5px; background: var(--logo-bg); box-shadow: 0 3px 12px rgba(0,0,0,0.45), 0 0 0 2px rgba(212,184,150,0.5); transition: border-color 0.3s, box-shadow 0.3s; }
-    .pin-logo img { width: 100%; height: 100%; object-fit: contain; padding: 3px; }
-    .map-pin.active .pin-logo { border-color: var(--map-red); box-shadow: 0 3px 14px rgba(0,0,0,0.5), 0 0 0 4px rgba(139,32,32,0.28); }
-    .pin-label { font-family: 'Cinzel', serif; font-size: 0.56rem; font-weight: 600; color: var(--map-dark); letter-spacing: 0.06em; max-width: 82px; line-height: 1.3; text-shadow: 1px 1px 2px rgba(212,184,150,0.95), -1px -1px 2px rgba(212,184,150,0.95); }
-    .pin-year { font-family: 'DM Mono', monospace; font-size: 0.5rem; color: var(--map-red); margin-top: 2px; text-shadow: 1px 1px 2px rgba(212,184,150,0.95); }
-
-    /* ── DETAIL SECTION — stacked cards ── */
-    .detail-section { background: linear-gradient(180deg, #1a1208 0%, #0f0b05 100%); padding: 4rem 2rem; }
-    .detail-grid { max-width: 950px; margin: 0 auto; display: flex; flex-direction: column; gap: 3rem; }
-
-    /* Every card is always visible; no show/hide toggling */
+    /* Cards have no hard borders at top/bottom — they fade into bg */
     .detail-card {
+      position: relative;
+      z-index: 5;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 0;
-      /* Smooth entry on page load */
-      opacity: 1;
-      /* Feathered / rounded edges matching map aesthetic */
+      max-width: 950px;
+      margin: 0 auto;
       border-radius: 6px;
       overflow: hidden;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.55);
+      box-shadow: 0 8px 60px rgba(0,0,0,0.7);
+      /* Feathered top/bottom — card melts into background */
+      -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 8%,
+        black 92%,
+        transparent 100%
+      );
+      mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 8%,
+        black 92%,
+        transparent 100%
+      );
     }
 
     .card-left { background: var(--map-bg); border: 3px solid var(--map-dark); padding: 2.5rem; position: relative; overflow: hidden; }
@@ -228,20 +155,6 @@
     .key-fact-value { font-family: 'DM Mono', monospace; font-size: 1rem; color: #e8d5b0; }
     .key-fact-value.hi { color: var(--accent); }
 
-    /* Divider between cards */
-    .card-divider {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin: 0 auto;
-      max-width: 950px;
-    }
-    .card-divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(184,134,11,0.35), transparent); }
-    .card-divider-icon { color: rgba(184,134,11,0.5); font-size: 0.75rem; font-family: 'Cinzel', serif; letter-spacing: 0.2em; white-space: nowrap; }
-
-    .edu-footer { background: #0a0702; border-top: 1px solid rgba(184,134,11,0.15); padding: 2rem; text-align: center; }
-    .edu-footer a { font-family: 'Syne', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: #6a5a40; text-decoration: none; transition: color 0.2s; }
-    .edu-footer a:hover { color: var(--map-gold); }
     .quote-box { background: rgba(184,134,11,0.07); border: 1px solid rgba(184,134,11,0.2); padding: 1.5rem; }
     .quote-box p { font-family: 'Crimson Text', serif; font-size: 1.05rem; font-style: italic; color: #c0a878; line-height: 1.7; }
     .cgpa-display { text-align: center; padding: 1rem 0; }
@@ -249,19 +162,82 @@
     .cgpa-label { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.15em; color: var(--map-path); margin-bottom: 0.5rem; }
     .cgpa-sub { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: #6a8040; margin-top: 0.4rem; }
 
+    /* ── DECORATIVE SCENE ELEMENTS ── */
+    .decor-img {
+      position: absolute;
+      object-fit: contain;
+      pointer-events: none;
+    }
+    /* One element per connector, hugging the path (path runs down center ~50%) */
+    /* Connector 1 — ship just left of path curve */
+    .c1-ship  { left: 30%; top: 55px;  width: 105px; opacity: 0.72; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.4)); animation: floatY 6s ease-in-out infinite; }
+    /* Connector 2 — boat slightly right of path, mid-height */
+    .c2-boat  { left: 54%; top: 75px;  width: 145px; opacity: 0.46; mix-blend-mode: screen; }
+    /* Connector 3 — boat under path curve, slightly left */
+    .c3-lake  { left: 35%; top: 88px;  width: 82px;  opacity: 0.78; mix-blend-mode: screen; animation: floatY 5.5s ease-in-out infinite 0.8s; }
+    /* Connector 4 — compass kissing right side of path */
+    .c4-compass { left: 52%; top: 62px; width: 88px; opacity: 0.65; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)); animation: spinSlow 30s linear infinite; }
+
+    @keyframes floatY {
+      0%,100% { transform: translateY(0px); }
+      50%      { transform: translateY(-8px); }
+    }
+    @keyframes floatY-flip {
+      0%,100% { transform: scaleX(-1) translateY(0px); }
+      50%      { transform: scaleX(-1) translateY(-8px); }
+    }
+    @keyframes spinSlow {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    /* Year marker node on the path */
+    .year-node {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      color: var(--map-gold);
+      background: rgba(26,18,8,0.9);
+      border: 1px solid rgba(184,134,11,0.45);
+      padding: 5px 14px;
+      pointer-events: none;
+      z-index: 6;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    /* Inline annotation text beside path */
+    .path-annotation {
+      position: absolute;
+      font-family: 'Crimson Text', serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: rgba(184,134,11,0.55);
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    /* Footer */
+    .edu-footer { background: var(--bg-mid); border-top: 1px solid rgba(184,134,11,0.15); padding: 3rem; text-align: center; }
+    .edu-footer a { font-family: 'Syne', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: #6a5a40; text-decoration: none; transition: color 0.2s; }
+    .edu-footer a:hover { color: var(--map-gold); }
+
     @media (max-width: 768px) {
       .edu-nav .nav-links { display: none; }
       .page-header { padding: 6rem 1.5rem 2rem; }
-      .map-svg-area { height: 320px; }
       .detail-card { grid-template-columns: 1fr; }
       .card-right { border-left: 3px solid var(--map-dark); border-top: none; }
-      .detail-section { padding: 2rem 1rem; }
-      .pin-label { font-size: 0.48rem; max-width: 64px; }
-      .pin-logo { width: 40px; height: 40px; }
-      .map-compass-img { width: 58px; height: 58px; }
-      .map-ship-img { width: 65px; }
-      .map-lake-img { width: 100px; }
-      .map-boat-img { width: 55px; }
+      .scene { padding: 0 0.75rem; }
+      .path-connector { height: 160px; }
+      .c1-ship   { width: 70px;  top: 40px; left: 32%; }
+      .c2-boat   { width: 100px; top: 55px; left: 52%; }
+      .c3-lake   { width: 55px;  top: 65px; left: 33%; }
+      .c4-compass{ width: 60px;  top: 48px; left: 50%; }
+      .year-node { font-size: 0.58rem; }
     }
   </style>
 </head>
@@ -282,6 +258,7 @@
     <a href="/cdn-cgi/l/email-protection#d8b9a1adabb0b3aae9f6adbfeaebf6bbab98b6b1aca8f6b9bbf6b1b6" class="nav-cta">Hire Me</a>
   </nav>
 
+  <!-- ═══════════════════════════════ HEADER ═══════════════════════════════ -->
   <div class="page-header">
     <h1>The <span>Journey</span> of Learning</h1>
     <div class="ornament">
@@ -292,156 +269,11 @@
     <p>Five institutions. One path. A story etched in ink and memory.</p>
   </div>
 
-  <!-- MAP -->
-  <div class="map-wrapper">
-    <div class="map-container">
+  <!-- ═══════════════════════════════ JOURNEY STREAM ═══════════════════════ -->
+  <div class="journey-stream">
 
-      <div class="map-title-box">
-        Educational Map &mdash; Ayush Kumar
-        <small>From Birpur to Patna &nbsp;·&nbsp; 2008 &mdash; Present</small>
-      </div>
-
-      <div class="map-legend">
-        <strong>Legend</strong>
-        ⊙ Institution<br>
-        ─ ─ Journey Path<br>
-        ↑ Direction of Travel
-      </div>
-
-      <!--
-        SVG viewBox: 0 0 1100 460
-        Centred pin coords (shifted +32 x, +23 y from original):
-          NC  406,128   DB  166,285   MP  540,208   VA  934,180   NP  582,333
-        BBox centre: x≈550, y≈230  ✓  (SVG centre)
-      -->
-      <svg class="map-svg-area" viewBox="0 0 1100 460" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-
-        <!-- Decorative double border -->
-        <rect x="8" y="8" width="1084" height="444" fill="none" stroke="#4a3520" stroke-width="2" opacity="0.55"/>
-        <rect x="14" y="14" width="1072" height="432" fill="none" stroke="#4a3520" stroke-width="0.7" opacity="0.25"/>
-
-        <!-- Subtle grid lines -->
-        <g stroke="#4a3520" stroke-width="0.4" opacity="0.07">
-          <line x1="275" y1="0" x2="275" y2="460"/>
-          <line x1="550" y1="0" x2="550" y2="460"/>
-          <line x1="825" y1="0" x2="825" y2="460"/>
-          <line x1="0" y1="153" x2="1100" y2="153"/>
-          <line x1="0" y1="306" x2="1100" y2="306"/>
-        </g>
-
-        <!-- Geographic region labels -->
-        <text x="100" y="210" font-family="'Cinzel',serif" font-size="11" fill="#4a3520" opacity="0.38" font-style="italic" transform="rotate(-5,100,210)">Supaul</text>
-        <text x="388" y="130" font-family="'Cinzel',serif" font-size="10" fill="#4a3520" opacity="0.32" font-style="italic">Araria</text>
-        <text x="830" y="110" font-family="'Cinzel',serif" font-size="13" fill="#4a3520" opacity="0.40" font-style="italic">Patna</text>
-        <text x="465" y="440" font-family="'Cinzel',serif" font-size="10" fill="#4a3520" opacity="0.32" font-style="italic">Kota, Rajasthan</text>
-        <text x="680" y="270" font-family="'Cinzel',serif" font-size="9" fill="#4a3520" opacity="0.28" font-style="italic">~ waters ~</text>
-
-        <!--
-          JOURNEY PATH (centred coords):
-          NC 406,128 → DB 166,285 → MP 540,208 → VA 934,180 → NP 582,333
-        -->
-        <path d="
-          M 406,128
-          C 340,170  185,210  166,285
-          C 145,355  328,195  540,208
-          C 680,212  830,185  934,180
-          C 908,255  730,315  582,333
-        "
-          fill="none"
-          stroke="#8b6914"
-          stroke-width="3.8"
-          stroke-dasharray="10,6"
-          stroke-linecap="round"
-          opacity="0.88"/>
-
-        <!-- Arrowheads -->
-        <g transform="translate(272,211) rotate(120)">
-          <polygon points="0,-5 9,0 0,5" fill="#8b6914" opacity="0.72"/>
-        </g>
-        <g transform="translate(347,236) rotate(-22)">
-          <polygon points="0,-5 9,0 0,5" fill="#8b6914" opacity="0.70"/>
-        </g>
-        <g transform="translate(730,196) rotate(-2)">
-          <polygon points="0,-5 9,0 0,5" fill="#8b6914" opacity="0.68"/>
-        </g>
-        <g transform="translate(768,284) rotate(150)">
-          <polygon points="0,-5 9,0 0,5" fill="#8b6914" opacity="0.65"/>
-        </g>
-
-        <!-- Pin anchor dots -->
-        <circle cx="406" cy="128" r="4.5" fill="none" stroke="#8b6914" stroke-width="1.5" opacity="0.45"/>
-        <circle cx="166" cy="285" r="4.5" fill="none" stroke="#8b6914" stroke-width="1.5" opacity="0.45"/>
-        <circle cx="540" cy="208" r="4.5" fill="none" stroke="#8b6914" stroke-width="1.5" opacity="0.45"/>
-        <circle cx="934" cy="180" r="4.5" fill="none" stroke="#8b6914" stroke-width="1.5" opacity="0.45"/>
-        <circle cx="582" cy="333" r="4.5" fill="none" stroke="#8b6914" stroke-width="1.5" opacity="0.45"/>
-
-        <!-- Year labels -->
-        <text x="328" y="175" font-family="'DM Mono',monospace" font-size="8" fill="#4a3520" opacity="0.48" transform="rotate(30,328,175)">2008</text>
-        <text x="200" y="338" font-family="'DM Mono',monospace" font-size="8" fill="#4a3520" opacity="0.44" transform="rotate(-10,200,338)">2014</text>
-        <text x="565" y="200" font-family="'DM Mono',monospace" font-size="8" fill="#4a3520" opacity="0.44">2019</text>
-        <text x="748" y="183" font-family="'DM Mono',monospace" font-size="8" fill="#4a3520" opacity="0.42">2021</text>
-        <text x="632" y="368" font-family="'DM Mono',monospace" font-size="8" fill="#4a3520" opacity="0.44">2023</text>
-      </svg>
-
-      <!-- ── LOGO PINS (centred positions derived from SVG coords) ── -->
-
-      <!-- NC: svgX=406 → left=36.9%, svgY=128 → top=101px -->
-      <div class="map-pin" id="pin-0" style="left:36.9%;top:101px" onclick="highlightPin(0)">
-        <div class="pin-logo"><img src="resources/logos/newCambridge_LOGO.png" alt="New Cambridge"/></div>
-        <div class="pin-label">New Cambridge School</div>
-        <div class="pin-year">2008–2014</div>
-      </div>
-
-      <!-- DB: svgX=166 → left=15.1%, svgY=285 → top=258px -->
-      <div class="map-pin" id="pin-1" style="left:15.1%;top:258px" onclick="highlightPin(1)">
-        <div class="pin-logo"><img src="resources/logos/donBosco_LOGO.png" alt="Don Bosco"/></div>
-        <div class="pin-label">Don Bosco Academy</div>
-        <div class="pin-year">2014–2019</div>
-      </div>
-
-      <!-- MP: svgX=540 → left=49.1%, svgY=208 → top=181px -->
-      <div class="map-pin" id="pin-2" style="left:49.1%;top:181px" onclick="highlightPin(2)">
-        <div class="pin-logo"><img src="resources/logos/mithilaPublic_LOGO.png" alt="Mithila Public"/></div>
-        <div class="pin-label">Mithila Public School</div>
-        <div class="pin-year">2019–2021</div>
-      </div>
-
-      <!-- VA: svgX=934 → left=84.9%, svgY=180 → top=153px -->
-      <div class="map-pin" id="pin-3" style="left:84.9%;top:153px" onclick="highlightPin(3)">
-        <div class="pin-logo"><img src="resources/logos/vibrantAcademy_LOGO.png" alt="Vibrant Academy"/></div>
-        <div class="pin-label">Vibrant Academy</div>
-        <div class="pin-year">2021–2022</div>
-      </div>
-
-      <!-- NP: svgX=582 → left=52.9%, svgY=333 → top=306px -->
-      <div class="map-pin active" id="pin-4" style="left:52.9%;top:306px" onclick="highlightPin(4)">
-        <div class="pin-logo"><img src="resources/logos/NITP_LOGO.png" alt="NIT Patna"/></div>
-        <div class="pin-label">NIT Patna</div>
-        <div class="pin-year">2023–Present</div>
-      </div>
-
-      <!-- Lake between VA and NP -->
-      <img src="resources/design elements/lake.png"  class="map-lake-img" alt="Lake"/>
-      <!-- Boat on the lake -->
-      <img src="resources/design elements/boat.png"  class="map-boat-img" alt="Boat"/>
-
-      <!-- Sailing ship (top-right corner decoration) -->
-      <img src="resources/design elements/sailing_ship.png" class="map-ship-img" alt="Sailing Ship"/>
-
-      <!-- Compass (bottom-right) -->
-      <img src="resources/design elements/compass.png" class="map-compass-img" alt="Compass"/>
-
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════════════════
-       DETAIL SECTION — stacked, most recent → oldest
-       Order: NIT Patna (4) → Vibrant (3) → Mithila (2) → Don Bosco (1) → New Cambridge (0)
-       ══════════════════════════════════════════════════ -->
-  <div class="detail-section">
-    <div class="detail-grid">
-
-      <!-- ── CARD: NIT Patna (most recent) ── -->
+    <!-- ══ CARD 1: NIT Patna (most recent) ══ -->
+    <div class="scene">
       <div class="detail-card" id="card-4">
         <div class="card-left">
           <div class="card-stage-num">V</div>
@@ -450,7 +282,7 @@
           <h2 class="card-school-name">National Institute of Technology, Patna</h2>
           <div class="card-location"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>Patna, Bihar</div>
           <div class="card-years">2023 &ndash; May 2027 &nbsp;&middot;&nbsp; B.Tech CSE</div>
-          <p class="card-desc">Admitted through JEE Mains, I began at NIT Patna in the Mechanical Engineering department before successfully transferring to Computer Science and Engineering — aligning my academic trajectory with my true passion. Currently maintaining a CGPA of 9.35, I have been active in both technical competitions and the campus robotics community.</p>
+          <p class="card-desc">Admitted through JEE Mains, I began at NIT Patna in the Mechanical Engineering department before successfully transferring to Computer Science and Engineering — aligning my academic trajectory with my true passion. Currently maintaining a CGPA of 9.41, I have been active in both technical competitions and the campus robotics community.</p>
           <ul class="achievement-list">
             <li>Class Representative, ME Section A (2023–24)</li>
             <li>Active Member, Robotics Club &mdash; designed and built a full-metal combat robot for RoboWar</li>
@@ -471,12 +303,12 @@
             <div class="marks-section-title">Academic Standing</div>
             <div class="cgpa-display">
               <div class="cgpa-label">CURRENT CGPA</div>
-              <div class="cgpa-num">9.35</div>
+              <div class="cgpa-num">9.41</div>
               <div class="cgpa-sub">out of 10.0</div>
             </div>
             <div class="stat-bar-row" style="margin-top:1rem">
-              <div class="stat-bar-label"><span>CGPA</span><span>9.35 / 10.0</span></div>
-              <div class="stat-bar-track"><div class="stat-bar-fill" data-width="93.5"></div></div>
+              <div class="stat-bar-label"><span>CGPA</span><span>9.41 / 10.0</span></div>
+              <div class="stat-bar-track"><div class="stat-bar-fill" data-width="94.1"></div></div>
             </div>
           </div>
           <div>
@@ -486,7 +318,7 @@
                 <tr><td>Institute</td><td class="score-cell">NIT Patna</td></tr>
                 <tr><td>Programme</td><td class="score-cell">B.Tech CSE</td></tr>
                 <tr><td>Expected Graduation</td><td class="score-cell" style="color:var(--accent)!important">May 2027</td></tr>
-                <tr><td>Current CGPA</td><td class="score-cell" style="color:var(--accent)!important">9.35</td></tr>
+                <tr><td>Current CGPA</td><td class="score-cell" style="color:var(--accent)!important">9.41</td></tr>
                 <tr><td>Admission Route</td><td class="score-cell">JEE Mains</td></tr>
               </tbody>
             </table>
@@ -494,15 +326,46 @@
           <div class="key-facts">
             <div class="key-fact"><div class="key-fact-label">Institute</div><div class="key-fact-value">NIT Patna</div></div>
             <div class="key-fact"><div class="key-fact-label">Branch</div><div class="key-fact-value">CSE</div></div>
-            <div class="key-fact"><div class="key-fact-label">CGPA</div><div class="key-fact-value hi">9.35</div></div>
-            <div class="key-fact"><div class="key-fact-label">Hackathon</div><div class="key-fact-value hi">1st &mdash; IITP</div></div>
+            <div class="key-fact"><div class="key-fact-label">CGPA</div><div class="key-fact-value hi">9.41</div></div>
+            <div class="key-fact"><div class="key-fact-label">Last Sem SGPA</div><div class="key-fact-value hi">9.78</div></div>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="card-divider"><div class="card-divider-line"></div><div class="card-divider-icon">◆ &nbsp; 2021–2022 &nbsp; ◆</div><div class="card-divider-line"></div></div>
+    <!-- ══ CONNECTOR 1: NIT Patna → Vibrant Academy ══ -->
+    <div class="path-connector" style="position:relative;">
+      <img src="resources/design elements/sailing_ship.png" class="decor-img c1-ship" alt=""/>
 
-      <!-- ── CARD: Vibrant Academy ── -->
+      <!-- Curved SVG path -->
+      <svg viewBox="0 0 960 220" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible;" xmlns="http://www.w3.org/2000/svg">
+        <!-- Main golden dashed journey path -->
+        <path d="M 480,5 C 360,60 600,160 480,215"
+          fill="none" stroke="#b8860b" stroke-width="2.5"
+          stroke-dasharray="10,7" stroke-linecap="round" opacity="0.65"/>
+        <!-- Soft ambient glow behind path -->
+        <path d="M 480,5 C 360,60 600,160 480,215"
+          fill="none" stroke="rgba(184,134,11,0.12)" stroke-width="18"
+          stroke-linecap="round"/>
+        <!-- Arrow mid-path -->
+        <polygon points="0,-5 10,0 0,5" fill="#b8860b" opacity="0.7"
+          transform="translate(471,118) rotate(92)"/>
+        <!-- Anchor dot top -->
+        <circle cx="480" cy="5"   r="5" fill="none" stroke="#b8860b" stroke-width="1.8" opacity="0.55"/>
+        <!-- Anchor dot bottom -->
+        <circle cx="480" cy="215" r="5" fill="none" stroke="#b8860b" stroke-width="1.8" opacity="0.55"/>
+        <!-- Flourish: small wavy sub-path hint -->
+        <path d="M 530,80 Q 580,100 570,135" fill="none" stroke="rgba(184,134,11,0.22)" stroke-width="1.2" stroke-dasharray="4,5"/>
+      </svg>
+
+      <!-- Year node -->
+      <div class="year-node">2021 – 2022</div>
+      <!-- Annotation -->
+      <div class="path-annotation" style="left:55%;top:28px;">Kota, Rajasthan</div>
+    </div>
+
+    <!-- ══ CARD 2: Vibrant Academy ══ -->
+    <div class="scene">
       <div class="detail-card" id="card-3">
         <div class="card-left">
           <div class="card-stage-num">IV</div>
@@ -510,30 +373,31 @@
           <div class="card-badge">JEE Preparation</div>
           <h2 class="card-school-name">Vibrant Academy</h2>
           <div class="card-location"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>Kota, Rajasthan</div>
-          <div class="card-years">Drop Year Program &nbsp;&middot;&nbsp; 2021 &ndash; 2022</div>
-          <p class="card-desc">Enrolled in Vibrant Academy's intensive drop-year JEE program — on the recommendation of a Don Bosco senior — this year in Kota proved to be far more than an academic exercise. Achieving a JEE Mains percentile of 97.1 secured admission to NIT Patna. But the deeper lesson learned here had nothing to do with scores.</p>
-          <p class="card-desc">Witnessing Professor Narendra Awasthi complete his second 10km lap of a marathon while I had not yet finished my first 5km was a moment of profound clarity. It redefined what persistence and a growth mindset truly look like when lived — not just taught.</p>
+          <div class="card-years">Drop Year &nbsp;&middot;&nbsp; 2021 &ndash; 2022</div>
+          <p class="card-desc">After completing Class XII, I moved to Kota for a dedicated drop year of JEE preparation at Vibrant Academy — one of India's most competitive coaching environments. The year tested every dimension of discipline, focus, and resilience. It was here that I learned the difference between studying hard and studying smart, under the pressure of daily tests and cutthroat competition.</p>
+          <ul class="achievement-list">
+            <li>Achieved JEE Mains Percentile of 97.1</li>
+            <li>Rigorous daily test schedule and performance tracking</li>
+            <li>Participated in the academy's annual marathon — an unexpected lesson in grit</li>
+          </ul>
           <div class="card-special">
-            <div class="card-special-title">&#10022; Special Mentions</div>
+            <div class="card-special-title">&#10022; The Marathon Moment</div>
             <div class="mentor-item">
-              <div class="mentor-icon"><svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div>
-              <div><div class="mentor-name">Prof. Narendra Awasthi (Sodium Sir)</div><div class="mentor-note">Renowned educator and marathon runner. A living proof that grit, at any age, is a decision made daily.</div></div>
-            </div>
-            <div class="mentor-item">
-              <div class="mentor-icon"><svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div>
-              <div><div class="mentor-name">MS Chauhan Sir</div><div class="mentor-note">Dissolved the complexity of Organic Chemistry into clarity with an exceptionally effective teaching approach.</div></div>
-            </div>
-            <div class="mentor-item">
-              <div class="mentor-icon"><svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div>
-              <div><div class="mentor-name">Sanjeet Dhandha Sir</div><div class="mentor-note">A brief but magnetic presence — his teaching style filled every classroom the way a great film fills a theatre.</div></div>
+              <div class="mentor-icon"><svg viewBox="0 0 24 24"><path d="M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.6 13.9l1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3c1.3 1.5 3.3 2.5 5.5 2.5v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1l-5.2 2.2v4.7h2v-3.4l1.8-.7-1.6 8.1-4.9-1-.4 2 7 1.4z"/></svg></div>
+              <div><div class="mentor-name">Watching a 52-year-old professor finish 20km first</div><div class="mentor-note">I hadn't reached 5km. That moment reframed everything I thought I knew about effort and limits.</div></div>
             </div>
           </div>
         </div>
         <div class="card-right">
           <div>
-            <div class="marks-section-title">JEE Outcome</div>
-            <div class="stat-bar-row" style="margin-top:0.5rem">
-              <div class="stat-bar-label"><span>JEE Mains Percentile</span><span>97.1</span></div>
+            <div class="marks-section-title">JEE Performance</div>
+            <div class="cgpa-display">
+              <div class="cgpa-label">JEE MAINS PERCENTILE</div>
+              <div class="cgpa-num" style="font-size:3.2rem;">97.1</div>
+              <div class="cgpa-sub">All India · 2022</div>
+            </div>
+            <div class="stat-bar-row" style="margin-top:1rem">
+              <div class="stat-bar-label"><span>Percentile</span><span>97.1</span></div>
               <div class="stat-bar-track"><div class="stat-bar-fill" data-width="97.1"></div></div>
             </div>
           </div>
@@ -562,10 +426,32 @@
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="card-divider"><div class="card-divider-line"></div><div class="card-divider-icon">◆ &nbsp; 2019–2021 &nbsp; ◆</div><div class="card-divider-line"></div></div>
+    <!-- ══ CONNECTOR 2: Vibrant → Mithila Public ══ -->
+    <div class="path-connector" style="position:relative;">
+      <img src="resources/design elements/lake.png" class="decor-img c2-boat" alt=""/>
 
-      <!-- ── CARD: Mithila Public School ── -->
+      <svg viewBox="0 0 960 220" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible;" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 480,5 C 620,55 340,165 480,215"
+          fill="none" stroke="#b8860b" stroke-width="2.5"
+          stroke-dasharray="10,7" stroke-linecap="round" opacity="0.65"/>
+        <path d="M 480,5 C 620,55 340,165 480,215"
+          fill="none" stroke="rgba(184,134,11,0.12)" stroke-width="18" stroke-linecap="round"/>
+        <polygon points="0,-5 10,0 0,5" fill="#b8860b" opacity="0.7"
+          transform="translate(487,118) rotate(-88)"/>
+        <circle cx="480" cy="5"   r="5" fill="none" stroke="#b8860b" stroke-width="1.8" opacity="0.55"/>
+        <circle cx="480" cy="215" r="5" fill="none" stroke="#b8860b" stroke-width="1.8" opacity="0.55"/>
+        <!-- Extra ornamental wavy line -->
+        <path d="M 400,60 Q 350,95 370,140" fill="none" stroke="rgba(184,134,11,0.2)" stroke-width="1.2" stroke-dasharray="4,5"/>
+      </svg>
+
+      <div class="year-node">2019 – 2021</div>
+      <div class="path-annotation" style="right:52%;top:30px;text-align:right;">Araria, Bihar</div>
+    </div>
+
+    <!-- ══ CARD 3: Mithila Public School ══ -->
+    <div class="scene">
       <div class="detail-card" id="card-2">
         <div class="card-left">
           <div class="card-stage-num">III</div>
@@ -620,10 +506,32 @@
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="card-divider"><div class="card-divider-line"></div><div class="card-divider-icon">◆ &nbsp; 2014–2019 &nbsp; ◆</div><div class="card-divider-line"></div></div>
+    <!-- ══ CONNECTOR 3: Mithila → Don Bosco ══ -->
+    <div class="path-connector" style="position:relative;">
+      <img src="resources/design elements/boat.png" class="decor-img c3-lake" alt=""/>
 
-      <!-- ── CARD: Don Bosco ── -->
+      <svg viewBox="0 0 960 220" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible;" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 480,5 C 340,70 620,150 480,215"
+          fill="none" stroke="#b8860b" stroke-width="2.5"
+          stroke-dasharray="10,7" stroke-linecap="round" opacity="0.65"/>
+        <path d="M 480,5 C 340,70 620,150 480,215"
+          fill="none" stroke="rgba(184,134,11,0.12)" stroke-width="18" stroke-linecap="round"/>
+        <polygon points="0,-5 10,0 0,5" fill="#b8860b" opacity="0.7"
+          transform="translate(472,115) rotate(82)"/>
+        <circle cx="480" cy="5"   r="5" fill="none" stroke="#b8860b" stroke-width="1.8" opacity="0.55"/>
+        <circle cx="480" cy="215" r="5" fill="none" stroke="#b8860b" stroke-width="1.8" opacity="0.55"/>
+        <!-- small decorative wave -->
+        <path d="M 560,65 Q 610,95 595,135" fill="none" stroke="rgba(122,163,184,0.25)" stroke-width="1.5" stroke-dasharray="3,4"/>
+      </svg>
+
+      <div class="year-node">2014 – 2019</div>
+      <div class="path-annotation" style="left:55%;top:165px;">Patna, Bihar</div>
+    </div>
+
+    <!-- ══ CARD 4: Don Bosco ══ -->
+    <div class="scene">
       <div class="detail-card" id="card-1">
         <div class="card-left">
           <div class="card-stage-num">II</div>
@@ -683,10 +591,32 @@
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="card-divider"><div class="card-divider-line"></div><div class="card-divider-icon">◆ &nbsp; 2008–2014 &nbsp; ◆</div><div class="card-divider-line"></div></div>
+    <!-- ══ CONNECTOR 4: Don Bosco → New Cambridge ══ -->
+    <div class="path-connector" style="position:relative;">
+      <img src="resources/design elements/compass.png" class="decor-img c4-compass" alt=""/>
 
-      <!-- ── CARD: New Cambridge (oldest) ── -->
+      <svg viewBox="0 0 960 220" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible;" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 480,5 C 560,70 400,145 480,215"
+          fill="none" stroke="#b8860b" stroke-width="2.5"
+          stroke-dasharray="10,7" stroke-linecap="round" opacity="0.65"/>
+        <path d="M 480,5 C 560,70 400,145 480,215"
+          fill="none" stroke="rgba(184,134,11,0.12)" stroke-width="18" stroke-linecap="round"/>
+        <polygon points="0,-5 10,0 0,5" fill="#b8860b" opacity="0.7"
+          transform="translate(476,112) rotate(-78)"/>
+        <circle cx="480" cy="5"   r="5" fill="none" stroke="#b8860b" stroke-width="1.8" opacity="0.55"/>
+        <circle cx="480" cy="215" r="5" fill="none" stroke="#b8860b" stroke-width="1.8" opacity="0.55"/>
+        <!-- rope-like decorative -->
+        <path d="M 300,40 Q 260,75 275,125 Q 290,175 255,195" fill="none" stroke="rgba(139,105,20,0.18)" stroke-width="1.5" stroke-dasharray="5,6"/>
+      </svg>
+
+      <div class="year-node">2008 – 2014</div>
+      <div class="path-annotation" style="left:53%;top:160px;">Birpur, Bihar</div>
+    </div>
+
+    <!-- ══ CARD 5: New Cambridge (oldest) ══ -->
+    <div class="scene">
       <div class="detail-card" id="card-0">
         <div class="card-left">
           <div class="card-stage-num">I</div>
@@ -734,13 +664,24 @@
           </div>
         </div>
       </div>
-
     </div>
-  </div>
+
+    <!-- ══ TERMINAL: where the journey began ══ -->
+    <div style="position:relative;text-align:center;padding:3rem 2rem 0;pointer-events:none;z-index:2;">
+      <svg viewBox="0 0 200 60" width="200" height="60" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto 1rem;">
+        <line x1="100" y1="0" x2="100" y2="35" stroke="#b8860b" stroke-width="2" stroke-dasharray="6,5" opacity="0.55"/>
+        <circle cx="100" cy="45" r="8" fill="none" stroke="#b8860b" stroke-width="2" opacity="0.6"/>
+        <circle cx="100" cy="45" r="3" fill="#b8860b" opacity="0.55"/>
+      </svg>
+      <div style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.22em;color:rgba(184,134,11,0.45);text-transform:uppercase;">Where it all began · 2008</div>
+    </div>
+
+  </div><!-- end .journey-stream -->
 
   <div class="edu-footer"><a href="index.html">&larr; Back to Portfolio</a></div>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="script.js"></script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script src="script.js"></script>
   <script>
     /* ── Animate stat bars on scroll using IntersectionObserver ── */
     function animateBars(container) {
@@ -758,22 +699,35 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.25 });
+    }, { threshold: 0.2 });
 
     document.querySelectorAll('.detail-card').forEach(card => observer.observe(card));
 
-    /* ── Pin highlight (cosmetic only — no scrolling/toggling) ── */
-    function highlightPin(idx) {
-      document.querySelectorAll('.map-pin').forEach(p => p.classList.remove('active'));
-      document.getElementById('pin-' + idx).classList.add('active');
+    /* ── Scroll-fade-in for cards ── */
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+          fadeObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
 
-      /* Scroll to the matching card */
-      const card = document.getElementById('card-' + idx);
-      if (card) {
-        const y = card.getBoundingClientRect().top + window.scrollY - 24;
-        window.scrollTo({ top: y, behavior: 'smooth' });
-      }
-    }
+    document.querySelectorAll('.detail-card').forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(32px)';
+      card.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+      fadeObserver.observe(card);
+    });
+
+    /* ── Parallax float for decor images on scroll ── */
+    window.addEventListener('scroll', () => {
+      const sy = window.scrollY;
+      document.querySelectorAll('.conn-ship-left, .conn-ship-right').forEach((el, i) => {
+        el.style.transform = `translateY(${Math.sin(sy * 0.003 + i) * 6}px)` + (el.classList.contains('conn-ship-right') ? ' scaleX(-1)' : '');
+      });
+    }, { passive: true });
   </script>
 </body>
 </html>
