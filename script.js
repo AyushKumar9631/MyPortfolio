@@ -225,4 +225,42 @@
   /* Skipped: landing-animation.js handles hero entrance animation */
   /* Hero .reveal elements are marked visible by landing-animation.js */
 
+  /* ── Cursor-Dodge Badges ── */
+  (function () {
+    const badges = document.querySelectorAll(".hero-eyebrow .badge");
+    if (!badges.length) return;
+
+    const DODGE_RADIUS = 90;
+    const MAX_SHIFT    = 72;
+
+    let lastMouseX = -999, lastMouseY = -999;
+
+    document.addEventListener("mousemove", (e) => {
+      lastMouseX = e.clientX;
+      lastMouseY = e.clientY;
+      updateDodge();
+    }, { passive: true });
+
+    function updateDodge() {
+      badges.forEach((badge) => {
+        const rect = badge.getBoundingClientRect();
+        const cx = rect.left + rect.width  / 2;
+        const cy = rect.top  + rect.height / 2;
+        const dx = lastMouseX - cx;
+        const dy = lastMouseY - cy;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < DODGE_RADIUS) {
+          const strength = 1 - dist / DODGE_RADIUS;
+          const shiftX   = -(dx / (dist || 1)) * MAX_SHIFT * strength;
+          badge.style.transform = `translateX(${shiftX.toFixed(2)}px)`;
+          badge.classList.add("dodging");
+        } else {
+          badge.style.transform = "translateX(0px)";
+          badge.classList.remove("dodging");
+        }
+      });
+    }
+  })();
+
 })();

@@ -55,13 +55,21 @@
       transform: translateY(0);
       transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    /* Gold sweep line under each nav link on land */
+    /* Gold sweep line under each nav link on land — use animation-fill-mode: none
+       so after the sweep the ::after pseudo reverts to its CSS-defined state (width:0)
+       and the normal hover rule (width:100%) can take over freely */
     .nav-link.link-drop::after {
-      animation: nav-sweep 0.6s 0.05s ease forwards;
+      animation: nav-sweep 0.65s 0.05s ease both;
     }
     @keyframes nav-sweep {
       0%   { width: 100%; opacity: 1; }
+      80%  { width: 20%;  opacity: 0.4; }
       100% { width: 0%;   opacity: 0; }
+    }
+    /* Once settled, ensure hover works normally — override any lingering animation */
+    .nav-link.link-drop:hover::after {
+      animation: none;
+      width: 100%;
     }
 
     /* ─── HERO TEXT: letter fly-from-left ─── */
