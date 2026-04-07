@@ -222,13 +222,7 @@
   });
 
   /* ── Page Load Animation Stagger ── */
-  window.addEventListener("load", () => {
-    const heroEls = document.querySelectorAll(".hero .reveal");
-    heroEls.forEach((el, i) => {
-      setTimeout(() => {
-        el.classList.add("visible");
-      }, 200 + i * 180);
-    });
-  });
+  /* Skipped: landing-animation.js handles hero entrance animation */
+  /* Hero .reveal elements are marked visible by landing-animation.js */
 
 })();
