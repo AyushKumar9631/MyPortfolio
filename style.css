@@ -8,7 +8,7 @@
   --text: #e8e8f0;
   --text-muted: #7070a0;
   --text-dim: #404060;
-  --accent: #c8ff3e;
+  --accent: #b8860b;
   --accent-2: #7b5cff;
   --accent-3: #ff5c8a;
   --accent-warm: #ffb347;
@@ -48,7 +48,7 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 }
 .cursor-trail {
   width: 36px; height: 36px;
-  border: 1.5px solid rgba(200,255,62,0.4);
+  border: 1.5px solid rgba(184,134,11,0.4);
   border-radius: 50%;
   position: fixed; top: 0; left: 0;
   pointer-events: none; z-index: 9998;
@@ -118,7 +118,7 @@ body:has(button:hover) .cursor { width: 24px; height: 24px; }
   border-radius: 999px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,255,62,0.3); }
+.nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(184,134,11,0.3); }
 .hamburger {
   display: none; flex-direction: column; gap: 5px;
   background: none; border: none; cursor: none; padding: 4px;
@@ -185,9 +185,9 @@ main { position: relative; z-index: 1; }
   background: var(--surface);
 }
 .badge-alt {
-  border-color: rgba(200,255,62,0.3);
+  border-color: rgba(184,134,11,0.3);
   color: var(--accent);
-  background: rgba(200,255,62,0.06);
+  background: rgba(184,134,11,0.06);
 }
 .hero-name {
   font-family: var(--font-display);
@@ -216,7 +216,7 @@ main { position: relative; z-index: 1; }
 .contact-pill svg { width: 15px; height: 15px; }
 .contact-pill:hover {
   background: var(--surface-2);
-  border-color: rgba(200,255,62,0.4);
+  border-color: rgba(184,134,11,0.4);
   color: var(--accent);
   transform: translateY(-2px);
 }
@@ -248,13 +248,13 @@ main { position: relative; z-index: 1; }
 }
 .edu-card:hover {
   transform: translateY(-5px);
-  border-color: rgba(200,255,62,0.25);
+  border-color: rgba(184,134,11,0.25);
   box-shadow: 0 16px 40px rgba(0,0,0,0.4);
 }
 .edu-badge {
   font-family: var(--font-mono); font-size: 0.75rem; font-weight: 400;
   padding: 0.5rem 0.8rem;
-  background: rgba(200,255,62,0.1); border: 1px solid rgba(200,255,62,0.25);
+  background: rgba(184,134,11,0.1); border: 1px solid rgba(184,134,11,0.25);
   border-radius: 8px; color: var(--accent);
   white-space: nowrap; flex-shrink: 0;
 }
@@ -306,7 +306,7 @@ main { position: relative; z-index: 1; }
   color: var(--accent-2);
 }
 .project-icon--alt {
-  background: rgba(200,255,62,0.08); border-color: rgba(200,255,62,0.2); color: var(--accent);
+  background: rgba(184,134,11,0.08); border-color: rgba(184,134,11,0.2); color: var(--accent);
 }
 .project-icon svg { width: 22px; height: 22px; }
 .project-date { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); }
@@ -346,7 +346,7 @@ main { position: relative; z-index: 1; }
 }
 .skill-tag:hover {
   background: var(--surface-2);
-  border-color: rgba(200,255,62,0.4);
+  border-color: rgba(184,134,11,0.4);
   color: var(--accent);
   transform: translateY(-2px);
 }
@@ -363,13 +363,13 @@ main { position: relative; z-index: 1; }
   transition: all 0.3s ease;
 }
 .role-item:hover {
-  border-color: rgba(200,255,62,0.2);
+  border-color: rgba(184,134,11,0.2);
   transform: translateX(6px);
   box-shadow: -4px 0 0 var(--accent);
 }
 .role-icon {
   width: 52px; height: 52px; flex-shrink: 0;
-  background: rgba(200,255,62,0.08); border: 1px solid rgba(200,255,62,0.2);
+  background: rgba(184,134,11,0.08); border: 1px solid rgba(184,134,11,0.2);
   border-radius: 14px; display: flex; align-items: center; justify-content: center;
   color: var(--accent);
 }
