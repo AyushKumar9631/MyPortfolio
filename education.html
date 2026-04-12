@@ -9,685 +9,674 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&family=Antic&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
-    /* ── Education page overrides ── */
     body { background: var(--bg); color: var(--text-primary); font-family: 'DM Mono', monospace; }
 
-    /* NAV */
-    .edu-nav {
+    /* ── NAV ── */
+    .page-nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
       padding: 1rem 2.5rem;
-      background: rgba(0,0,0,0.9);
-      backdrop-filter: blur(16px);
+      background: rgba(0,0,0,0.92); backdrop-filter: blur(18px);
       border-bottom: 1px solid var(--border-mid);
     }
-    .edu-nav .nav-logo {
-      font-family: 'Fira Code', monospace; font-weight: 700; font-size: 1.2rem;
-      color: var(--text-primary); text-decoration: none; letter-spacing: 0.05em;
-    }
-    .edu-nav .nav-logo .dot { color: var(--accent); }
-    .edu-nav .nav-links { display: flex; gap: 2rem; list-style: none; margin-right: 1.8rem; }
-    .edu-nav .nav-links a {
-      font-family: 'Syne', sans-serif; font-size: 0.75rem;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--text-secondary); text-decoration: none; transition: color 0.2s;
-    }
-    .edu-nav .nav-links a:hover,
-    .edu-nav .nav-links a.active { color: var(--accent); }
-    .edu-nav .nav-cta {
-      font-family: 'Syne', sans-serif; font-size: 0.72rem; letter-spacing: 0.1em;
-      text-transform: uppercase; color: #000; background: var(--accent);
-      padding: 0.45rem 1.2rem; text-decoration: none; font-weight: 700;
-      transition: opacity 0.2s; border-radius: 2px;
-    }
-    .edu-nav .nav-cta:hover { opacity: 0.85; }
+    .page-nav .nav-logo { font-family: 'Fira Code', monospace; font-weight: 700; font-size: 1.2rem; color: var(--text-primary); text-decoration: none; letter-spacing: 0.05em; }
+    .page-nav .nav-logo .dot { color: var(--accent); }
+    .page-nav .nav-links { display: flex; gap: 2rem; list-style: none; margin-right: 1.8rem; }
+    .page-nav .nav-links a { font-family: 'Syne', sans-serif; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
+    .page-nav .nav-links a:hover, .page-nav .nav-links a.active { color: var(--accent); }
+    .page-nav .nav-cta { font-family: 'Syne', sans-serif; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: #000; background: var(--accent); padding: 0.45rem 1.2rem; text-decoration: none; font-weight: 700; transition: opacity 0.2s; border-radius: 2px; }
+    .page-nav .nav-cta:hover { opacity: 0.85; }
+    @media(max-width:768px){ .page-nav .nav-links { display: none; } }
 
-    /* HEADER */
-    .page-header {
-      padding: 8rem 4rem 4rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+    /* ── PAGE WRAPPER ── */
+    .page-wrapper {
+      min-height: 100vh;
+      padding-top: 72px;
+      display: flex;
+      flex-direction: column;
     }
-    .page-header::before {
+
+    /* ── PAGE HEADER ── */
+    .pg-header {
+      padding: 4rem 4rem 2rem;
+      position: relative;
+      text-align: center;
+    }
+    .pg-header::before {
       content: '';
       position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 50% 100%, rgba(195,228,29,0.06) 0%, transparent 70%);
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(195,228,29,0.05) 0%, transparent 70%);
       pointer-events: none;
     }
-    .page-header h1 {
-      font-family: 'Fira Code', monospace; font-size: clamp(2.2rem, 6vw, 4.5rem);
-      color: var(--text-primary); font-weight: 700; letter-spacing: -0.02em;
-      position: relative;
+    .pg-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--accent);
+      border: 1px solid var(--border); padding: 4px 14px; border-radius: 20px;
+      margin-bottom: 1.2rem;
+      background: var(--accent-glow);
     }
-    .page-header h1 span { color: var(--accent); }
-    .page-header p {
-      font-family: 'Antic', sans-serif; font-size: 1.05rem;
-      color: var(--text-secondary); margin-top: 0.75rem; position: relative;
+    .pg-title {
+      font-family: 'Fira Code', monospace; font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700; letter-spacing: -0.02em; color: var(--text-primary);
+      margin-bottom: 0.75rem;
     }
-    .ornament { display: flex; align-items: center; justify-content: center; gap: 1rem; margin: 1.5rem 0; position: relative; }
-    .ornament-line { flex: 1; max-width: 200px; height: 1px; background: linear-gradient(90deg, transparent, var(--accent), transparent); opacity: 0.3; }
-    .ornament-diamond { width: 8px; height: 8px; background: var(--accent); transform: rotate(45deg); }
-
-    /* JOURNEY STREAM */
-    .journey-stream { position: relative; padding: 0 0 6rem; }
-
-    /* PATH CONNECTOR */
-    .path-connector {
-      position: relative; width: 100%; height: 220px;
-      overflow: visible; display: flex; align-items: center; justify-content: center;
-      z-index: 2;
-    }
-    .path-connector svg { width: 100%; height: 220px; overflow: visible; }
-
-    /* SCENE */
-    .scene { position: relative; width: 100%; padding: 0 2rem; }
-
-    /* DETAIL CARD */
-    .detail-card {
-      position: relative; z-index: 5;
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 0; max-width: 950px; margin: 0 auto;
-      border-radius: 4px; overflow: hidden;
-      box-shadow: 0 8px 60px rgba(0,0,0,0.8), 0 0 0 1px var(--border-dim);
-      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
-      mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
+    .pg-title span { color: var(--accent); }
+    .pg-sub {
+      font-family: 'Antic', sans-serif; font-size: 1rem;
+      color: var(--text-secondary); max-width: 520px; margin: 0 auto;
     }
 
-    .card-left {
-      background: var(--bg-card);
+    /* ── TAB LAYOUT ── */
+    .tab-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 0;
+      max-width: 1280px;
+      margin: 2.5rem auto 4rem;
+      padding: 0 2rem;
+      width: 100%;
+      align-items: start;
+    }
+
+    /* ── TAB SIDEBAR ── */
+    .tab-sidebar {
+      position: sticky;
+      top: 88px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
       border-right: 1px solid var(--border-dim);
-      padding: 2.5rem; position: relative; overflow: hidden;
+      padding-right: 0;
     }
-    .card-stage-num {
-      font-family: 'Fira Code', monospace; font-size: 4rem; font-weight: 700;
-      color: rgba(195,228,29,0.06); position: absolute; top: 1rem; right: 1.5rem;
-      line-height: 1; user-select: none;
+
+    .tab-btn {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.4rem 1.6rem 1.4rem 1.6rem;
+      background: none;
+      border: none;
+      border-right: 2px solid transparent;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.25s, border-color 0.25s;
+      width: 100%;
+      outline: none;
     }
-    .card-logo {
-      width: 64px; height: 64px; border-radius: 50%;
-      border: 1px solid var(--border); overflow: hidden;
-      background: var(--bg-card-alt); margin-bottom: 1rem;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-      display: flex; align-items: center; justify-content: center;
+    .tab-btn:hover { background: rgba(195,228,29,0.03); }
+    .tab-btn.active {
+      background: rgba(195,228,29,0.05);
+      border-right-color: var(--accent);
     }
-    .card-logo img { width: 100%; height: 100%; object-fit: contain; padding: 6px; }
-    .card-badge {
-      display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.62rem;
-      letter-spacing: 0.15em; color: var(--accent); background: var(--accent-glow);
-      border: 1px solid var(--border); padding: 3px 12px; margin-bottom: 1rem;
-      text-transform: uppercase; border-radius: 2px;
+    .tab-btn-num {
+      font-family: 'Fira Code', monospace; font-size: 0.62rem; letter-spacing: 0.12em;
+      color: var(--text-muted); padding-top: 3px; flex-shrink: 0;
+      transition: color 0.25s;
     }
-    .card-school-name {
-      font-family: 'Fira Code', monospace; font-size: 1.2rem; font-weight: 700;
-      color: var(--text-primary); line-height: 1.25; margin-bottom: 0.4rem;
+    .tab-btn.active .tab-btn-num { color: var(--accent); }
+    .tab-btn-body { flex: 1; min-width: 0; }
+    .tab-btn-label {
+      font-family: 'Fira Code', monospace; font-size: 0.88rem; font-weight: 600;
+      color: var(--text-secondary); line-height: 1.3; margin-bottom: 0.25rem;
+      transition: color 0.25s;
     }
-    .card-location {
-      font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--text-muted);
-      margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.4rem;
+    .tab-btn.active .tab-btn-label { color: var(--text-primary); }
+    .tab-btn-meta {
+      font-family: 'DM Mono', monospace; font-size: 0.68rem;
+      color: var(--text-muted);
     }
-    .card-location svg { width: 12px; height: 12px; stroke: var(--text-muted); flex-shrink: 0; }
-    .card-years {
+    .tab-btn-year {
+      font-family: 'DM Mono', monospace; font-size: 0.68rem;
+      color: var(--text-muted); margin-top: 0.3rem;
+    }
+    .tab-btn-score {
+      display: inline-block; margin-top: 0.4rem;
+      font-family: 'Fira Code', monospace; font-size: 0.72rem;
+      color: var(--accent); letter-spacing: 0.05em;
+    }
+
+    /* Progress line on sidebar */
+    .sidebar-track {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: var(--border-dim);
+    }
+
+    /* ── CONTENT PANEL ── */
+    .tab-content-wrap {
+      padding-left: 3rem;
+      position: relative;
+      min-height: 500px;
+    }
+
+    .tab-panel {
+      display: none;
+      animation: panelIn 0.4s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    .tab-panel.active { display: block; }
+
+    @keyframes panelIn {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Panel header */
+    .panel-eyebrow {
+      display: flex; align-items: center; gap: 0.75rem;
+      margin-bottom: 1.6rem; flex-wrap: wrap;
+    }
+    .panel-badge {
+      font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--accent); background: var(--accent-glow);
+      border: 1px solid var(--border); padding: 3px 12px; border-radius: 2px;
+    }
+    .panel-badge.muted { color: var(--text-secondary); background: transparent; border-color: var(--border-dim); }
+    .panel-title {
+      font-family: 'Fira Code', monospace; font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 700; color: var(--text-primary); letter-spacing: -0.01em;
+      margin-bottom: 0.4rem; line-height: 1.15;
+    }
+    .panel-location {
       font-family: 'DM Mono', monospace; font-size: 0.75rem;
-      color: var(--accent); letter-spacing: 0.08em; margin-bottom: 1.5rem; opacity: 0.8;
+      color: var(--text-muted); margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.4rem;
     }
-    .card-desc {
-      font-family: 'Antic', sans-serif; font-size: 0.95rem;
-      line-height: 1.8; color: var(--text-secondary); margin-bottom: 1rem;
+    .panel-location::before { content: '📍'; font-size: 0.7rem; }
+    .panel-years {
+      font-family: 'DM Mono', monospace; font-size: 0.8rem;
+      color: var(--accent); margin-bottom: 2rem; letter-spacing: 0.06em; opacity: 0.9;
     }
-    .card-special { border-top: 1px solid var(--border-dim); padding-top: 1rem; margin-top: 0.5rem; }
-    .card-special-title {
-      font-family: 'Fira Code', monospace; font-size: 0.62rem; letter-spacing: 0.15em;
-      color: var(--accent); text-transform: uppercase; margin-bottom: 0.7rem; opacity: 0.7;
+    .panel-desc {
+      font-family: 'Antic', sans-serif; font-size: 1rem;
+      color: var(--text-secondary); line-height: 1.9; margin-bottom: 2rem;
+      max-width: 680px;
     }
-    .mentor-item { display: flex; gap: 0.75rem; margin-bottom: 0.75rem; align-items: flex-start; }
-    .mentor-icon {
-      width: 28px; height: 28px; border-radius: 50%;
-      background: var(--accent-glow); border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+
+    /* Two-col content area */
+    .panel-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
     }
-    .mentor-icon svg { width: 12px; height: 12px; stroke: var(--accent); }
-    .mentor-name { font-family: 'Fira Code', monospace; font-size: 0.78rem; font-weight: 600; color: var(--text-primary); }
-    .mentor-note { font-family: 'Antic', sans-serif; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; }
-    .achievement-list { list-style: none; margin: 0.5rem 0 1rem; }
+    .panel-block {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dim);
+      border-radius: 4px;
+      padding: 1.4rem 1.6rem;
+      transition: border-color 0.25s;
+    }
+    .panel-block:hover { border-color: var(--border); }
+    .panel-block-title {
+      font-family: 'Fira Code', monospace; font-size: 0.6rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--accent); opacity: 0.7;
+      margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .panel-block-title::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--border), transparent); }
+
+    /* Achievement list */
+    .achievement-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
     .achievement-list li {
-      display: flex; gap: 0.6rem; align-items: flex-start; margin-bottom: 0.45rem;
-      font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5;
+      display: flex; align-items: flex-start; gap: 0.6rem;
+      font-family: 'DM Mono', monospace; font-size: 0.78rem;
+      color: var(--text-secondary); line-height: 1.6;
     }
-    .achievement-list li::before { content: '▸'; color: var(--accent); font-size: 0.65rem; margin-top: 2px; flex-shrink: 0; }
+    .achievement-list li::before { content: '▸'; color: var(--accent); font-size: 0.65rem; margin-top: 3px; flex-shrink: 0; }
 
-    /* CARD RIGHT */
-    .card-right {
-      background: var(--bg-card-alt);
-      padding: 2.5rem; display: flex; flex-direction: column; gap: 2rem;
-    }
-    .marks-section-title {
-      font-family: 'Fira Code', monospace; font-size: 0.65rem; letter-spacing: 0.2em;
-      color: var(--accent); text-transform: uppercase; margin-bottom: 1rem;
-      display: flex; align-items: center; gap: 0.75rem; opacity: 0.8;
-    }
-    .marks-section-title::after {
-      content: ''; flex: 1; height: 1px;
-      background: linear-gradient(90deg, var(--border), transparent);
-    }
-    .marks-table { width: 100%; border-collapse: collapse; }
-    .marks-table th {
-      font-family: 'Fira Code', monospace; font-size: 0.58rem; letter-spacing: 0.1em;
-      color: var(--text-muted); text-transform: uppercase; text-align: left;
-      padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--border-dim);
-    }
-    .marks-table td {
-      font-family: 'DM Mono', monospace; font-size: 0.82rem; color: var(--text-secondary);
-      padding: 0.4rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.03);
-    }
-    .marks-table tr:hover td { color: var(--text-primary); background: var(--accent-glow); }
-    .score-cell { font-family: 'Fira Code', monospace !important; font-size: 0.82rem !important; color: var(--accent) !important; text-align: right !important; }
-    .total-row td { color: var(--text-primary) !important; font-family: 'Fira Code', monospace !important; font-size: 0.82rem !important; border-top: 1px solid var(--border) !important; }
+    /* Score stat */
+    .score-display { text-align: center; padding: 0.5rem 0 1rem; }
+    .score-big { font-family: 'Fira Code', monospace; font-size: 3.2rem; font-weight: 700; color: var(--accent); line-height: 1; text-shadow: 0 0 40px rgba(195,228,29,0.2); }
+    .score-lbl { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.16em; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; }
+    .score-sub { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--text-muted); margin-top: 0.3rem; }
 
-    .stat-bar-row { margin-bottom: 0.9rem; }
-    .stat-bar-label { display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 4px; }
-    .stat-bar-label span:last-child { font-family: 'Fira Code', monospace; font-size: 0.72rem; color: var(--accent); }
-    .stat-bar-track { height: 3px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden; }
-    .stat-bar-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--accent), rgba(195,228,29,0.5)); width: 0%; transition: width 1s cubic-bezier(0.4,0,0.2,1); }
+    /* Bar row */
+    .bar-row { margin-bottom: 0.85rem; }
+    .bar-label { display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--text-secondary); margin-bottom: 4px; }
+    .bar-label span:last-child { color: var(--accent); font-family: 'Fira Code', monospace; }
+    .bar-track { height: 3px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden; }
+    .bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), rgba(195,228,29,0.4)); border-radius: 2px; width: 0; transition: width 1.1s cubic-bezier(0.4,0,0.2,1); }
 
-    .key-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-    .key-fact { background: var(--bg-card); border: 1px solid var(--border-dim); padding: 0.75rem 1rem; border-radius: 3px; }
-    .key-fact-label { font-family: 'Fira Code', monospace; font-size: 0.55rem; letter-spacing: 0.12em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.3rem; }
-    .key-fact-value { font-family: 'DM Mono', monospace; font-size: 0.95rem; color: var(--text-primary); }
-    .key-fact-value.hi { color: var(--accent); }
+    /* Metric grid */
+    .metric-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    .metric-box { background: var(--bg-card); border: 1px solid var(--border-dim); padding: 0.85rem 1rem; border-radius: 3px; transition: border-color 0.2s; }
+    .metric-box:hover { border-color: var(--border); }
+    .metric-lbl { font-family: 'Fira Code', monospace; font-size: 0.52rem; letter-spacing: 0.14em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.3rem; }
+    .metric-val { font-family: 'Fira Code', monospace; font-size: 1.05rem; font-weight: 700; color: var(--text-primary); }
+    .metric-val.hi { color: var(--accent); }
 
-    .quote-box { background: var(--accent-glow); border: 1px solid var(--border); padding: 1.4rem; border-radius: 3px; }
-    .quote-box p { font-family: 'Antic', sans-serif; font-size: 0.95rem; color: var(--text-secondary); line-height: 1.75; }
-
-    .cgpa-display { text-align: center; padding: 1rem 0; }
-    .cgpa-num { font-family: 'Fira Code', monospace; font-size: 4rem; font-weight: 700; color: var(--accent); line-height: 1; text-shadow: 0 0 40px rgba(195,228,29,0.2); }
-    .cgpa-label { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.15em; color: var(--text-muted); margin-bottom: 0.5rem; }
-    .cgpa-sub { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--text-muted); margin-top: 0.4rem; }
-
-    /* PATH CONNECTOR VISUALS */
-    .year-node {
-      position: absolute; left: 50%; top: 50%;
-      transform: translate(-50%, -50%);
-      font-family: 'Fira Code', monospace; font-size: 0.68rem; letter-spacing: 0.16em;
-      color: var(--accent); background: rgba(0,0,0,0.92); border: 1px solid var(--border);
-      padding: 5px 14px; pointer-events: none; z-index: 6;
-      text-align: center; white-space: nowrap; border-radius: 2px;
+    /* Milestone quote */
+    .milestone-box {
+      background: var(--accent-glow); border: 1px solid var(--border);
+      border-radius: 4px; padding: 1.3rem 1.5rem; margin-bottom: 1.5rem;
     }
-    .path-annotation {
-      position: absolute; font-family: 'DM Mono', monospace; font-size: 0.72rem;
-      color: rgba(195,228,29,0.35); pointer-events: none; z-index: 3;
-    }
+    .milestone-label { font-family: 'Fira Code', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.6rem; opacity: 0.8; }
+    .milestone-name { font-family: 'Fira Code', monospace; font-size: 0.82rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.35rem; }
+    .milestone-note { font-family: 'Antic', sans-serif; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.65; }
+
+    /* Subject table */
+    .subj-table { width: 100%; border-collapse: collapse; }
+    .subj-table th { font-family: 'Fira Code', monospace; font-size: 0.56rem; letter-spacing: 0.1em; color: var(--text-muted); text-transform: uppercase; text-align: left; padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--border-dim); }
+    .subj-table td { font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--text-secondary); padding: 0.38rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.03); }
+    .subj-table tr:hover td { color: var(--text-primary); background: rgba(195,228,29,0.03); }
+    .subj-score { font-family: 'Fira Code', monospace !important; color: var(--accent) !important; text-align: right !important; }
+    .subj-total td { color: var(--text-primary) !important; font-family: 'Fira Code', monospace !important; border-top: 1px solid var(--border) !important; }
 
     /* Footer */
-    .edu-footer {
-      background: var(--bg-mid); border-top: 1px solid var(--border-mid);
-      padding: 3rem; text-align: center;
-    }
-    .edu-footer a {
-      font-family: 'Syne', sans-serif; font-size: 0.72rem; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.2s;
-    }
-    .edu-footer a:hover { color: var(--accent); }
+    .page-footer { background: var(--bg-mid); border-top: 1px solid var(--border-mid); padding: 2.5rem; text-align: center; }
+    .page-footer a { font-family: 'Syne', sans-serif; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+    .page-footer a:hover { color: var(--accent); }
 
-    @media (max-width: 768px) {
-      .edu-nav .nav-links { display: none; }
-      .page-header { padding: 6rem 1.5rem 2rem; }
-      .detail-card { grid-template-columns: 1fr; }
-      .card-right { border-top: 1px solid var(--border-dim); }
-      .scene { padding: 0 0.75rem; }
-      .path-connector { height: 160px; }
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .tab-layout { grid-template-columns: 1fr; padding: 0 1.2rem; }
+      .tab-sidebar { position: static; border-right: none; border-bottom: 1px solid var(--border-dim); flex-direction: row; overflow-x: auto; gap: 0; padding-bottom: 0; margin-bottom: 2rem; }
+      .tab-btn { flex-direction: column; gap: 0.3rem; padding: 0.9rem 1.1rem; border-right: none; border-bottom: 2px solid transparent; min-width: 130px; }
+      .tab-btn.active { border-bottom-color: var(--accent); border-right-color: transparent; }
+      .tab-content-wrap { padding-left: 0; }
+      .panel-grid { grid-template-columns: 1fr; }
+      .pg-header { padding: 3rem 1.5rem 1.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-trail" id="cursorTrail"></div>
-  <div class="bg-grid"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
+<div class="bg-grid"></div>
 
-  <nav class="edu-nav">
-    <a href="index.html" class="nav-logo">AK<span class="dot">.</span></a>
-    <ul class="nav-links">
-      <li><a href="index.html#about">About</a></li>
-      <li><a href="education.html" class="active">Education</a></li>
-      <li><a href="index.html#projects">Projects</a></li>
-      <li><a href="index.html#skills">Skills</a></li>
-      <li><a href="index.html#responsibilities">Roles</a></li>
-    </ul>
-    <a href="mailto:ayushkr1.ug23.cs@nitp.ac.in" class="nav-cta">Hire Me</a>
-  </nav>
+<!-- NAV -->
+<nav class="page-nav">
+  <a href="index.html" class="nav-logo">AK<span class="dot">.</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="education.html" class="active">Education</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="index.html#skills">Skills</a></li>
+    <li><a href="index.html#responsibilities">Roles</a></li>
+  </ul>
+  <a href="mailto:ayushkr1.ug23.cs@nitp.ac.in" class="nav-cta">Hire Me</a>
+</nav>
+
+<div class="page-wrapper">
 
   <!-- HEADER -->
-  <div class="page-header">
-    <h1>The <span>Journey</span> of Learning</h1>
-    <div class="ornament">
-      <div class="ornament-line"></div>
-      <div class="ornament-diamond"></div>
-      <div class="ornament-line"></div>
-    </div>
-    <p>Five institutions. One path. A story etched in code and memory.</p>
+  <div class="pg-header">
+    <div class="pg-badge">⬡ Academic Journey</div>
+    <h1 class="pg-title">The <span>Journey</span> of Learning</h1>
+    <p class="pg-sub">Five institutions. One path. A story etched in code and memory.</p>
   </div>
 
-  <!-- JOURNEY STREAM -->
-  <div class="journey-stream">
+  <!-- TAB LAYOUT -->
+  <div class="tab-layout">
 
-    <!-- CARD 1: NIT Patna -->
-    <div class="scene">
-      <div class="detail-card" id="card-4">
-        <div class="card-left">
-          <div class="card-stage-num">V</div>
-          <div class="card-logo"><img src="resources/logos/NITP_LOGO.png" alt="NIT Patna Logo"/></div>
-          <div class="card-badge">B.Tech Undergraduate</div>
-          <h2 class="card-school-name">National Institute of Technology, Patna</h2>
-          <div class="card-location">
-            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
-            Patna, Bihar
+    <!-- SIDEBAR -->
+    <div class="tab-sidebar" role="tablist" aria-label="Education stages">
+
+      <button class="tab-btn active" data-tab="nitp" role="tab" aria-selected="true">
+        <span class="tab-btn-num">05</span>
+        <div class="tab-btn-body">
+          <div class="tab-btn-label">NIT Patna</div>
+          <div class="tab-btn-meta">B.Tech · CSE</div>
+          <div class="tab-btn-year">2023 – 2027</div>
+          <span class="tab-btn-score">9.41 CGPA</span>
+        </div>
+      </button>
+
+      <button class="tab-btn" data-tab="vibrant" role="tab" aria-selected="false">
+        <span class="tab-btn-num">04</span>
+        <div class="tab-btn-body">
+          <div class="tab-btn-label">Vibrant Academy</div>
+          <div class="tab-btn-meta">JEE Prep · Kota</div>
+          <div class="tab-btn-year">2021 – 2022</div>
+          <span class="tab-btn-score">97.1 Percentile</span>
+        </div>
+      </button>
+
+      <button class="tab-btn" data-tab="mithila" role="tab" aria-selected="false">
+        <span class="tab-btn-num">03</span>
+        <div class="tab-btn-body">
+          <div class="tab-btn-label">Mithila Public</div>
+          <div class="tab-btn-meta">Class XI–XII · CBSE</div>
+          <div class="tab-btn-year">2019 – 2021</div>
+          <span class="tab-btn-score">84.5%</span>
+        </div>
+      </button>
+
+      <button class="tab-btn" data-tab="donbosco" role="tab" aria-selected="false">
+        <span class="tab-btn-num">02</span>
+        <div class="tab-btn-body">
+          <div class="tab-btn-label">Don Bosco Academy</div>
+          <div class="tab-btn-meta">Class VI–X · ICSE</div>
+          <div class="tab-btn-year">2014 – 2019</div>
+          <span class="tab-btn-score">92.2% ICSE</span>
+        </div>
+      </button>
+
+      <button class="tab-btn" data-tab="cambridge" role="tab" aria-selected="false">
+        <span class="tab-btn-num">01</span>
+        <div class="tab-btn-body">
+          <div class="tab-btn-label">New Cambridge</div>
+          <div class="tab-btn-meta">Primary · CBSE</div>
+          <div class="tab-btn-year">2008 – 2014</div>
+          <span class="tab-btn-score">Division A</span>
+        </div>
+      </button>
+
+    </div><!-- /sidebar -->
+
+    <!-- CONTENT -->
+    <div class="tab-content-wrap">
+
+      <!-- ── NIT PATNA ── -->
+      <div class="tab-panel active" id="panel-nitp" role="tabpanel">
+        <div class="panel-eyebrow">
+          <span class="panel-badge">B.Tech Undergraduate</span>
+          <span class="panel-badge muted">Most Recent</span>
+        </div>
+        <h2 class="panel-title">National Institute of Technology, Patna</h2>
+        <div class="panel-location">Patna, Bihar</div>
+        <div class="panel-years">2023 – May 2027 &nbsp;·&nbsp; B.Tech Computer Science Engineering</div>
+        <p class="panel-desc">Admitted through JEE Mains into Mechanical Engineering, I transferred to Computer Science Engineering — aligning my academic path with my true passion. Maintaining a CGPA of 9.41, I've been active across technical competitions, the robotics club, and leadership roles on campus.</p>
+
+        <div class="panel-grid">
+          <div class="panel-block">
+            <div class="panel-block-title">Academic Standing</div>
+            <div class="score-display">
+              <div class="score-lbl">Current CGPA</div>
+              <div class="score-big" data-count="9.41" data-decimals="2">9.41</div>
+              <div class="score-sub">out of 10.0 &nbsp;·&nbsp; Last Sem SGPA: 9.78</div>
+            </div>
+            <div class="bar-row" style="margin-top:1rem">
+              <div class="bar-label"><span>CGPA Progress</span><span>9.41 / 10.0</span></div>
+              <div class="bar-track"><div class="bar-fill" data-width="94.1"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label"><span>Last Sem SGPA</span><span>9.78 / 10.0</span></div>
+              <div class="bar-track"><div class="bar-fill" data-width="97.8"></div></div>
+            </div>
           </div>
-          <div class="card-years">2023 &ndash; May 2027 &nbsp;·&nbsp; B.Tech CSE</div>
-          <p class="card-desc">Admitted through JEE Mains, I began at NIT Patna in the Mechanical Engineering department before successfully transferring to Computer Science and Engineering — aligning my academic trajectory with my true passion. Currently maintaining a CGPA of 9.41, I have been active in both technical competitions and the campus robotics community.</p>
+
+          <div class="panel-block">
+            <div class="panel-block-title">Programme Details</div>
+            <div class="metric-grid">
+              <div class="metric-box"><div class="metric-lbl">Institute</div><div class="metric-val">NIT Patna</div></div>
+              <div class="metric-box"><div class="metric-lbl">Branch</div><div class="metric-val hi">CSE</div></div>
+              <div class="metric-box"><div class="metric-lbl">Graduation</div><div class="metric-val hi">May 2027</div></div>
+              <div class="metric-box"><div class="metric-lbl">Route</div><div class="metric-val">JEE Mains</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="milestone-box">
+          <div class="milestone-label">⬡ Key Milestone</div>
+          <div class="milestone-name">The Robot That Taught Resilience</div>
+          <div class="milestone-note">Three burnt Arduinos. Countless sleepless nights. A full-metal combat robot built from scratch — only to fail on competition day. Somehow still secured 3rd at RoboWar. Also 1st Place at IIT Patna Hackathon. The best lessons often come from things that don't go to plan.</div>
+        </div>
+
+        <div class="panel-block">
+          <div class="panel-block-title">Achievements & Roles</div>
           <ul class="achievement-list">
-            <li>Class Representative, ME Section A (2023–24)</li>
-            <li>Active Member, Robotics Club — designed and built a full-metal combat robot for RoboWar</li>
+            <li>Class Representative — ME Section A (2023–24)</li>
+            <li>Active Member, Robotics Club — designed full-metal combat robot for RoboWar</li>
             <li>1st Place, Hackathon at IIT Patna</li>
-            <li>3rd Place, RoboWar Competition (after hardware failures on competition day)</li>
-            <li>Successful branch transfer from Mechanical to Computer Science Engineering</li>
+            <li>3rd Place, RoboWar Competition (despite hardware failures on competition day)</li>
+            <li>Successful branch transfer: Mechanical Engineering → Computer Science Engineering</li>
           </ul>
-          <div class="card-special">
-            <div class="card-special-title">&#9670; Key Milestone</div>
-            <div class="mentor-item">
-              <div class="mentor-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-              <div>
-                <div class="mentor-name">The Robot That Taught Resilience</div>
-                <div class="mentor-note">Three burnt Arduinos. Countless sleepless nights. A full-metal beast built from scratch — only to fail on the day of competition. Somehow still secured 3rd. The best lessons often come from the things that don't go to plan.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="card-right">
-          <div>
-            <div class="marks-section-title">Academic Standing</div>
-            <div class="cgpa-display">
-              <div class="cgpa-label">CURRENT CGPA</div>
-              <div class="cgpa-num">9.41</div>
-              <div class="cgpa-sub">out of 10.0</div>
-            </div>
-            <div class="stat-bar-row" style="margin-top:1rem">
-              <div class="stat-bar-label"><span>CGPA</span><span>9.41 / 10.0</span></div>
-              <div class="stat-bar-track"><div class="stat-bar-fill" data-width="94.1"></div></div>
-            </div>
-          </div>
-          <div>
-            <div class="marks-section-title">Programme Details</div>
-            <table class="marks-table">
-              <tbody>
-                <tr><td>Institute</td><td class="score-cell">NIT Patna</td></tr>
-                <tr><td>Programme</td><td class="score-cell">B.Tech CSE</td></tr>
-                <tr><td>Expected Graduation</td><td class="score-cell">May 2027</td></tr>
-                <tr><td>Current CGPA</td><td class="score-cell">9.41</td></tr>
-                <tr><td>Admission Route</td><td class="score-cell">JEE Mains</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="key-facts">
-            <div class="key-fact"><div class="key-fact-label">Institute</div><div class="key-fact-value">NIT Patna</div></div>
-            <div class="key-fact"><div class="key-fact-label">Branch</div><div class="key-fact-value">CSE</div></div>
-            <div class="key-fact"><div class="key-fact-label">CGPA</div><div class="key-fact-value hi">9.41</div></div>
-            <div class="key-fact"><div class="key-fact-label">Last Sem SGPA</div><div class="key-fact-value hi">9.78</div></div>
-          </div>
         </div>
       </div>
-    </div>
 
-    <!-- CONNECTOR 1 -->
-    <div class="path-connector" style="position:relative;">
-      <svg viewBox="0 0 960 220" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible;" xmlns="http://www.w3.org/2000/svg">
-        <path d="M 480,5 C 360,60 600,160 480,215" fill="none" stroke="#C3E41D" stroke-width="2" stroke-dasharray="10,7" stroke-linecap="round" opacity="0.5"/>
-        <path d="M 480,5 C 360,60 600,160 480,215" fill="none" stroke="rgba(195,228,29,0.07)" stroke-width="20" stroke-linecap="round"/>
-        <polygon points="0,-5 10,0 0,5" fill="#C3E41D" opacity="0.6" transform="translate(471,118) rotate(92)"/>
-        <circle cx="480" cy="5"   r="4" fill="none" stroke="#C3E41D" stroke-width="1.5" opacity="0.5"/>
-        <circle cx="480" cy="215" r="4" fill="none" stroke="#C3E41D" stroke-width="1.5" opacity="0.5"/>
-      </svg>
-      <div class="year-node">2021 – 2022</div>
-      <div class="path-annotation" style="left:55%;top:28px;">Kota, Rajasthan</div>
-    </div>
+      <!-- ── VIBRANT ACADEMY ── -->
+      <div class="tab-panel" id="panel-vibrant" role="tabpanel">
+        <div class="panel-eyebrow">
+          <span class="panel-badge">JEE Preparation</span>
+          <span class="panel-badge muted">Drop Year</span>
+        </div>
+        <h2 class="panel-title">Vibrant Academy</h2>
+        <div class="panel-location">Kota, Rajasthan</div>
+        <div class="panel-years">2021 – 2022 &nbsp;·&nbsp; Intensive JEE Coaching</div>
+        <p class="panel-desc">Moved to Kota for a dedicated drop year of JEE preparation at one of India's most competitive coaching environments. The year tested every dimension of discipline, focus, and resilience. Learned the difference between studying hard and studying smart under the pressure of daily tests and cutthroat competition.</p>
 
-    <!-- CARD 2: Vibrant Academy -->
-    <div class="scene">
-      <div class="detail-card" id="card-3">
-        <div class="card-left">
-          <div class="card-stage-num">IV</div>
-          <div class="card-logo"><img src="resources/logos/vibrantAcademy_LOGO.png" alt="Vibrant Academy Logo"/></div>
-          <div class="card-badge">JEE Preparation</div>
-          <h2 class="card-school-name">Vibrant Academy</h2>
-          <div class="card-location"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>Kota, Rajasthan</div>
-          <div class="card-years">Drop Year &nbsp;·&nbsp; 2021 &ndash; 2022</div>
-          <p class="card-desc">After completing Class XII, I moved to Kota for a dedicated drop year of JEE preparation at Vibrant Academy — one of India's most competitive coaching environments. The year tested every dimension of discipline, focus, and resilience. It was here that I learned the difference between studying hard and studying smart, under the pressure of daily tests and cutthroat competition.</p>
-          <ul class="achievement-list">
-            <li>Achieved JEE Mains Percentile of 97.1</li>
-            <li>Rigorous daily test schedule and performance tracking</li>
-            <li>Participated in the academy's annual marathon — an unexpected lesson in grit</li>
-          </ul>
-          <div class="card-special">
-            <div class="card-special-title">&#9670; The Marathon Moment</div>
-            <div class="mentor-item">
-              <div class="mentor-icon"><svg viewBox="0 0 24 24"><path d="M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.6 13.9l1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3c1.3 1.5 3.3 2.5 5.5 2.5v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1l-5.2 2.2v4.7h2v-3.4l1.8-.7-1.6 8.1-4.9-1-.4 2 7 1.4z"/></svg></div>
-              <div>
-                <div class="mentor-name">Watching a 52-year-old professor finish 20km first</div>
-                <div class="mentor-note">I hadn't reached 5km. That moment reframed everything I thought I knew about effort and limits.</div>
-              </div>
+        <div class="panel-grid">
+          <div class="panel-block">
+            <div class="panel-block-title">JEE Performance</div>
+            <div class="score-display">
+              <div class="score-lbl">JEE Mains Percentile</div>
+              <div class="score-big" style="font-size:2.8rem" data-count="97.1" data-decimals="1">97.1</div>
+              <div class="score-sub">All India · 2022</div>
+            </div>
+            <div class="bar-row" style="margin-top:1rem">
+              <div class="bar-label"><span>Percentile</span><span>97.1</span></div>
+              <div class="bar-track"><div class="bar-fill" data-width="97.1"></div></div>
+            </div>
+          </div>
+
+          <div class="panel-block">
+            <div class="panel-block-title">Programme Details</div>
+            <div class="metric-grid">
+              <div class="metric-box"><div class="metric-lbl">Location</div><div class="metric-val">Kota, Raj.</div></div>
+              <div class="metric-box"><div class="metric-lbl">Duration</div><div class="metric-val">1 Year</div></div>
+              <div class="metric-box"><div class="metric-lbl">Percentile</div><div class="metric-val hi">97.1</div></div>
+              <div class="metric-box"><div class="metric-lbl">Outcome</div><div class="metric-val hi">NIT Patna</div></div>
             </div>
           </div>
         </div>
-        <div class="card-right">
-          <div>
-            <div class="marks-section-title">JEE Performance</div>
-            <div class="cgpa-display">
-              <div class="cgpa-label">JEE MAINS PERCENTILE</div>
-              <div class="cgpa-num" style="font-size:3.2rem;">97.1</div>
-              <div class="cgpa-sub">All India · 2022</div>
-            </div>
-            <div class="stat-bar-row" style="margin-top:1rem">
-              <div class="stat-bar-label"><span>Percentile</span><span>97.1</span></div>
-              <div class="stat-bar-track"><div class="stat-bar-fill" data-width="97.1"></div></div>
-            </div>
-          </div>
-          <div>
-            <div class="marks-section-title">The Lesson from Kota</div>
-            <div class="quote-box">
-              <p>"Watching a 52-year-old professor complete 20km while I had not yet finished 5 — I learned more about life than any formula could teach. Grit is not talent. It is a decision, made daily."</p>
-            </div>
-          </div>
-          <div>
-            <div class="marks-section-title">Program Details</div>
-            <table class="marks-table">
-              <tbody>
-                <tr><td>Program Type</td><td class="score-cell">Drop Year</td></tr>
-                <tr><td>Target</td><td class="score-cell">JEE Mains &amp; Advanced</td></tr>
-                <tr><td>JEE Mains Percentile</td><td class="score-cell">97.1</td></tr>
-                <tr><td>Outcome</td><td class="score-cell">NIT Patna</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="key-facts">
-            <div class="key-fact"><div class="key-fact-label">Location</div><div class="key-fact-value">Kota, Raj.</div></div>
-            <div class="key-fact"><div class="key-fact-label">Duration</div><div class="key-fact-value">1 Year</div></div>
-            <div class="key-fact"><div class="key-fact-label">Percentile</div><div class="key-fact-value hi">97.1</div></div>
-            <div class="key-fact"><div class="key-fact-label">Core Lesson</div><div class="key-fact-value hi">GRIT</div></div>
-          </div>
+
+        <div class="milestone-box">
+          <div class="milestone-label">⬡ The Marathon Moment</div>
+          <div class="milestone-name">Watching a 52-year-old professor finish 20km first</div>
+          <div class="milestone-note">"I hadn't reached 5km. That moment reframed everything I thought I knew about effort and limits. Grit is not talent. It is a decision, made daily."</div>
         </div>
       </div>
-    </div>
 
-    <!-- CONNECTOR 2 -->
-    <div class="path-connector" style="position:relative;">
-      <svg viewBox="0 0 960 220" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible;" xmlns="http://www.w3.org/2000/svg">
-        <path d="M 480,5 C 620,55 340,165 480,215" fill="none" stroke="#C3E41D" stroke-width="2" stroke-dasharray="10,7" stroke-linecap="round" opacity="0.5"/>
-        <path d="M 480,5 C 620,55 340,165 480,215" fill="none" stroke="rgba(195,228,29,0.07)" stroke-width="20" stroke-linecap="round"/>
-        <polygon points="0,-5 10,0 0,5" fill="#C3E41D" opacity="0.6" transform="translate(487,118) rotate(-88)"/>
-        <circle cx="480" cy="5"   r="4" fill="none" stroke="#C3E41D" stroke-width="1.5" opacity="0.5"/>
-        <circle cx="480" cy="215" r="4" fill="none" stroke="#C3E41D" stroke-width="1.5" opacity="0.5"/>
-      </svg>
-      <div class="year-node">2019 – 2021</div>
-      <div class="path-annotation" style="right:52%;top:30px;text-align:right;">Araria, Bihar</div>
-    </div>
-
-    <!-- CARD 3: Mithila Public School -->
-    <div class="scene">
-      <div class="detail-card" id="card-2">
-        <div class="card-left">
-          <div class="card-stage-num">III</div>
-          <div class="card-logo"><img src="resources/logos/mithilaPublic_LOGO.png" alt="Mithila Public Logo"/></div>
-          <div class="card-badge">Senior Secondary</div>
-          <h2 class="card-school-name">Mithila Public School</h2>
-          <div class="card-location"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>Araria, Bihar</div>
-          <div class="card-years">Class XI &ndash; XII &nbsp;·&nbsp; 2019 &ndash; 2021</div>
-          <p class="card-desc">Classes XI and XII at Mithila Public School coincided with intensive JEE preparation and the disruption of the COVID-19 pandemic. Enrolled simultaneously at a coaching institute, school attendance was maintained at the minimum required threshold. The pandemic further compressed academic timelines, yet the CBSE board examinations were cleared with 84.5%.</p>
-          <ul class="achievement-list">
-            <li>Cleared CBSE Class XII Board Examination with 84.5%</li>
-            <li>Managed dual commitment of school attendance and JEE coaching</li>
-            <li>Maintained academic continuity through the COVID-19 pandemic</li>
-          </ul>
-          <div class="card-special">
-            <div class="card-special-title">&#9670; Context</div>
-            <div class="mentor-item">
-              <div class="mentor-icon"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm1 14.93V15a1 1 0 00-2 0v1.93A8.001 8.001 0 014.07 11H6a1 1 0 000-2H4.07A8.001 8.001 0 0111 4.07V6a1 1 0 002 0V4.07A8.001 8.001 0 0119.93 11H18a1 1 0 000 2h1.93A8.001 8.001 0 0113 16.93z"/></svg></div>
-              <div>
-                <div class="mentor-name">A Period of Transition</div>
-                <div class="mentor-note">These two years served as a bridge — formal schooling as a checkpoint while real preparation for engineering college entrance was underway in parallel.</div>
-              </div>
-            </div>
-          </div>
+      <!-- ── MITHILA PUBLIC ── -->
+      <div class="tab-panel" id="panel-mithila" role="tabpanel">
+        <div class="panel-eyebrow">
+          <span class="panel-badge">Senior Secondary</span>
+          <span class="panel-badge muted">CBSE</span>
         </div>
-        <div class="card-right">
-          <div>
-            <div class="marks-section-title">CBSE Class XII Board (2021)</div>
-            <table class="marks-table">
-              <thead><tr><th>Subject</th><th style="text-align:right">Score / 100</th></tr></thead>
+        <h2 class="panel-title">Mithila Public School</h2>
+        <div class="panel-location">Araria, Bihar</div>
+        <div class="panel-years">2019 – 2021 &nbsp;·&nbsp; Class XI – XII</div>
+        <p class="panel-desc">Classes XI and XII coincided with intensive JEE preparation and the disruption of COVID-19. Enrolled simultaneously at a coaching institute, school attendance was maintained at the minimum required threshold. Despite the compressed timelines, cleared CBSE boards with 84.5%.</p>
+
+        <div class="panel-grid">
+          <div class="panel-block">
+            <div class="panel-block-title">CBSE Class XII Board (2021)</div>
+            <table class="subj-table">
+              <thead><tr><th>Subject</th><th style="text-align:right">Score</th></tr></thead>
               <tbody>
-                <tr><td>Physical Education</td><td class="score-cell">93</td></tr>
-                <tr><td>English Core</td><td class="score-cell">84</td></tr>
-                <tr><td>Physics</td><td class="score-cell">84</td></tr>
-                <tr><td>Chemistry</td><td class="score-cell">84</td></tr>
-                <tr><td>Mathematics</td><td class="score-cell">83</td></tr>
-                <tr><td>Biology</td><td class="score-cell">79</td></tr>
+                <tr><td>Physical Education</td><td class="subj-score">93</td></tr>
+                <tr><td>English Core</td><td class="subj-score">84</td></tr>
+                <tr><td>Physics</td><td class="subj-score">84</td></tr>
+                <tr><td>Chemistry</td><td class="subj-score">84</td></tr>
+                <tr><td>Mathematics</td><td class="subj-score">83</td></tr>
+                <tr><td>Biology</td><td class="subj-score">79</td></tr>
               </tbody>
-              <tfoot><tr class="total-row"><td>Aggregate</td><td class="score-cell">84.5%</td></tr></tfoot>
+              <tfoot><tr class="subj-total"><td>Aggregate</td><td class="subj-score">84.5%</td></tr></tfoot>
             </table>
           </div>
-          <div>
-            <div class="marks-section-title">Subject Profile</div>
-            <div class="stat-bar-row"><div class="stat-bar-label"><span>Physical Education</span><span>93%</span></div><div class="stat-bar-track"><div class="stat-bar-fill" data-width="93"></div></div></div>
-            <div class="stat-bar-row"><div class="stat-bar-label"><span>English Core</span><span>84%</span></div><div class="stat-bar-track"><div class="stat-bar-fill" data-width="84"></div></div></div>
-            <div class="stat-bar-row"><div class="stat-bar-label"><span>Physics</span><span>84%</span></div><div class="stat-bar-track"><div class="stat-bar-fill" data-width="84"></div></div></div>
-            <div class="stat-bar-row"><div class="stat-bar-label"><span>Chemistry</span><span>84%</span></div><div class="stat-bar-track"><div class="stat-bar-fill" data-width="84"></div></div></div>
-            <div class="stat-bar-row"><div class="stat-bar-label"><span>Mathematics</span><span>83%</span></div><div class="stat-bar-track"><div class="stat-bar-fill" data-width="83"></div></div></div>
+
+          <div class="panel-block">
+            <div class="panel-block-title">Subject Profile</div>
+            <div class="bar-row"><div class="bar-label"><span>Physical Education</span><span>93%</span></div><div class="bar-track"><div class="bar-fill" data-width="93"></div></div></div>
+            <div class="bar-row"><div class="bar-label"><span>English Core</span><span>84%</span></div><div class="bar-track"><div class="bar-fill" data-width="84"></div></div></div>
+            <div class="bar-row"><div class="bar-label"><span>Physics</span><span>84%</span></div><div class="bar-track"><div class="bar-fill" data-width="84"></div></div></div>
+            <div class="bar-row"><div class="bar-label"><span>Chemistry</span><span>84%</span></div><div class="bar-track"><div class="bar-fill" data-width="84"></div></div></div>
+            <div class="bar-row"><div class="bar-label"><span>Mathematics</span><span>83%</span></div><div class="bar-track"><div class="bar-fill" data-width="83"></div></div></div>
+            <div class="metric-grid" style="margin-top:1rem">
+              <div class="metric-box"><div class="metric-lbl">Board</div><div class="metric-val">CBSE</div></div>
+              <div class="metric-box"><div class="metric-lbl">Aggregate</div><div class="metric-val hi">84.5%</div></div>
+            </div>
           </div>
-          <div class="key-facts">
-            <div class="key-fact"><div class="key-fact-label">Board</div><div class="key-fact-value">CBSE</div></div>
-            <div class="key-fact"><div class="key-fact-label">Stream</div><div class="key-fact-value">Science PCM/B</div></div>
-            <div class="key-fact"><div class="key-fact-label">Result</div><div class="key-fact-value hi">PASS</div></div>
-            <div class="key-fact"><div class="key-fact-label">Aggregate</div><div class="key-fact-value hi">84.5%</div></div>
-          </div>
+        </div>
+
+        <div class="milestone-box">
+          <div class="milestone-label">⬡ Context</div>
+          <div class="milestone-name">A Period of Transition</div>
+          <div class="milestone-note">These two years served as a bridge — formal schooling as a checkpoint while real preparation for engineering college entrance was underway in parallel. COVID added pressure; the result held.</div>
         </div>
       </div>
-    </div>
 
-    <!-- CONNECTOR 3 -->
-    <div class="path-connector" style="position:relative;">
-      <svg viewBox="0 0 960 220" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible;" xmlns="http://www.w3.org/2000/svg">
-        <path d="M 480,5 C 340,70 620,150 480,215" fill="none" stroke="#C3E41D" stroke-width="2" stroke-dasharray="10,7" stroke-linecap="round" opacity="0.5"/>
-        <path d="M 480,5 C 340,70 620,150 480,215" fill="none" stroke="rgba(195,228,29,0.07)" stroke-width="20" stroke-linecap="round"/>
-        <polygon points="0,-5 10,0 0,5" fill="#C3E41D" opacity="0.6" transform="translate(472,115) rotate(82)"/>
-        <circle cx="480" cy="5"   r="4" fill="none" stroke="#C3E41D" stroke-width="1.5" opacity="0.5"/>
-        <circle cx="480" cy="215" r="4" fill="none" stroke="#C3E41D" stroke-width="1.5" opacity="0.5"/>
-      </svg>
-      <div class="year-node">2014 – 2019</div>
-      <div class="path-annotation" style="left:55%;top:165px;">Patna, Bihar</div>
-    </div>
+      <!-- ── DON BOSCO ── -->
+      <div class="tab-panel" id="panel-donbosco" role="tabpanel">
+        <div class="panel-eyebrow">
+          <span class="panel-badge">Secondary Education</span>
+          <span class="panel-badge muted">ICSE</span>
+        </div>
+        <h2 class="panel-title">Don Bosco Academy</h2>
+        <div class="panel-location">Digha Ghat, Patna, Bihar</div>
+        <div class="panel-years">2014 – 2019 &nbsp;·&nbsp; Class VI – X</div>
+        <p class="panel-desc">Five transformative years at this prestigious ICSE institution. Living as a boarder at Angelo Hostel, I learned independence, resilience, and community. Beyond academics, I discovered an unexpected talent for carrom — eventually representing at the national level.</p>
 
-    <!-- CARD 4: Don Bosco -->
-    <div class="scene">
-      <div class="detail-card" id="card-1">
-        <div class="card-left">
-          <div class="card-stage-num">II</div>
-          <div class="card-logo"><img src="resources/logos/donBosco_LOGO.png" alt="Don Bosco Logo"/></div>
-          <div class="card-badge">Secondary Education</div>
-          <h2 class="card-school-name">Don Bosco Academy</h2>
-          <div class="card-location"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>Digha Ghat, Patna, Bihar</div>
-          <div class="card-years">Class VI &ndash; X &nbsp;·&nbsp; 2014 &ndash; 2019</div>
-          <p class="card-desc">Five transformative years at this prestigious ICSE institution shaped me profoundly. Moving away from home to live as a boarder at Angelo Hostel, I learned independence, resilience, and the value of community. Beyond academics, I explored a wide range of extracurricular activities and discovered an unexpected talent for carrom.</p>
-          <ul class="achievement-list">
-            <li>Represented ICSE at the School Games Federation of India in carrom</li>
-            <li>Multiple regional-level carrom championship victories</li>
-            <li>Runner-up (solo) at inter-school carrom meet, Gyan Niketan</li>
-            <li>Participant, National ICSE Schools Carrom Championship</li>
-          </ul>
-          <div class="card-special">
-            <div class="card-special-title">&#9670; Special Mentions</div>
-            <div class="mentor-item">
-              <div class="mentor-icon"><svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div>
-              <div>
-                <div class="mentor-name">Principal Mary Alphonsa ("Miss Thankma")</div>
-                <div class="mentor-note">Cared for every boarder like her own child — providing a home away from home during our most formative years.</div>
-              </div>
+        <div class="panel-grid">
+          <div class="panel-block">
+            <div class="panel-block-title">ICSE Class X Board (2019)</div>
+            <div class="bar-row"><div class="bar-label"><span>Computer Applications</span><span>97%</span></div><div class="bar-track"><div class="bar-fill" data-width="97"></div></div></div>
+            <div class="bar-row"><div class="bar-label"><span>History, Civics & Geography</span><span>96%</span></div><div class="bar-track"><div class="bar-fill" data-width="96"></div></div></div>
+            <div class="bar-row"><div class="bar-label"><span>Hindi</span><span>94%</span></div><div class="bar-track"><div class="bar-fill" data-width="94"></div></div></div>
+            <div class="bar-row"><div class="bar-label"><span>Mathematics</span><span>92%</span></div><div class="bar-track"><div class="bar-fill" data-width="92"></div></div></div>
+            <div class="bar-row"><div class="bar-label"><span>Science</span><span>92%</span></div><div class="bar-track"><div class="bar-fill" data-width="92"></div></div></div>
+            <div class="metric-grid" style="margin-top:1rem">
+              <div class="metric-box"><div class="metric-lbl">Board</div><div class="metric-val">ICSE</div></div>
+              <div class="metric-box"><div class="metric-lbl">Top Score</div><div class="metric-val hi">97 — CS</div></div>
             </div>
-            <div class="mentor-item">
-              <div class="mentor-icon"><svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div>
-              <div>
-                <div class="mentor-name">N.P. Sir</div>
-                <div class="mentor-note">Pushed beyond academic limits — teaching that true achievement lies in pursuing what seems impossible.</div>
-              </div>
+          </div>
+
+          <div class="panel-block">
+            <div class="panel-block-title">Achievements</div>
+            <ul class="achievement-list">
+              <li>Represented ICSE at the School Games Federation of India in carrom</li>
+              <li>Multiple regional-level carrom championship victories</li>
+              <li>Runner-up (solo) at inter-school carrom meet, Gyan Niketan</li>
+              <li>Participant, National ICSE Schools Carrom Championship</li>
+            </ul>
+            <div class="metric-grid" style="margin-top:1.2rem">
+              <div class="metric-box"><div class="metric-lbl">Type</div><div class="metric-val">Boarder</div></div>
+              <div class="metric-box"><div class="metric-lbl">Overall</div><div class="metric-val hi">92.2%</div></div>
             </div>
           </div>
         </div>
-        <div class="card-right">
-          <div>
-            <div class="marks-section-title">Class VII Yearly Average (2014–15)</div>
-            <table class="marks-table">
-              <thead><tr><th>Subject</th><th style="text-align:right">Avg / 100</th></tr></thead>
+
+        <div class="milestone-box">
+          <div class="milestone-label">⬡ Special Mentions</div>
+          <div class="milestone-name">Principal Mary Alphonsa ("Miss Thankma") &amp; N.P. Sir</div>
+          <div class="milestone-note">Two teachers who shaped far more than subject knowledge — one who cared for every boarder like family, another who pushed beyond what seemed possible. The kind of guidance that lasts a lifetime.</div>
+        </div>
+      </div>
+
+      <!-- ── NEW CAMBRIDGE ── -->
+      <div class="tab-panel" id="panel-cambridge" role="tabpanel">
+        <div class="panel-eyebrow">
+          <span class="panel-badge">Primary Education</span>
+          <span class="panel-badge muted">CBSE</span>
+        </div>
+        <h2 class="panel-title">New Cambridge Residential School</h2>
+        <div class="panel-location">Birpur, Supaul, Bihar</div>
+        <div class="panel-years">2008 – 2014 &nbsp;·&nbsp; Nursery – Class V</div>
+        <p class="panel-desc">The foundation of everything began here in my hometown. As a day scholar at this CBSE primary school, I spent my earliest years building curiosity, discipline, and a love for learning — the years of firsts. First exams, first friendships, first lessons in what it means to show up and try.</p>
+
+        <div class="panel-grid">
+          <div class="panel-block">
+            <div class="panel-block-title">Academic Record · Class II</div>
+            <table class="subj-table">
+              <thead><tr><th>Subject</th><th style="text-align:right">Score</th></tr></thead>
               <tbody>
-                <tr><td>Mathematics</td><td class="score-cell">95</td></tr>
-                <tr><td>Science</td><td class="score-cell">92</td></tr>
-                <tr><td>Hindi</td><td class="score-cell">86</td></tr>
-                <tr><td>History &amp; Civics</td><td class="score-cell">85</td></tr>
-                <tr><td>Computer Studies</td><td class="score-cell">88</td></tr>
-                <tr><td>English Literature</td><td class="score-cell">76</td></tr>
+                <tr><td>Science</td><td class="subj-score">98</td></tr>
+                <tr><td>Mathematics</td><td class="subj-score">95</td></tr>
+                <tr><td>English</td><td class="subj-score">92</td></tr>
+                <tr><td>Hindi</td><td class="subj-score">85</td></tr>
+                <tr><td>G.K. (out of 50)</td><td class="subj-score">43</td></tr>
               </tbody>
-              <tfoot><tr class="total-row"><td>Overall %</td><td class="score-cell">80.09%</td></tr></tfoot>
+              <tfoot><tr class="subj-total"><td>Total (550)</td><td class="subj-score">507 · Div A</td></tr></tfoot>
             </table>
           </div>
-          <div>
-            <div class="marks-section-title">ICSE Class X Board (2019)</div>
-            <div class="stat-bar-row"><div class="stat-bar-label"><span>Computer Applications</span><span>97%</span></div><div class="stat-bar-track"><div class="stat-bar-fill" data-width="97"></div></div></div>
-            <div class="stat-bar-row"><div class="stat-bar-label"><span>History, Civics &amp; Geography</span><span>96%</span></div><div class="stat-bar-track"><div class="stat-bar-fill" data-width="96"></div></div></div>
-            <div class="stat-bar-row"><div class="stat-bar-label"><span>Hindi</span><span>94%</span></div><div class="stat-bar-track"><div class="stat-bar-fill" data-width="94"></div></div></div>
-            <div class="stat-bar-row"><div class="stat-bar-label"><span>Mathematics</span><span>92%</span></div><div class="stat-bar-track"><div class="stat-bar-fill" data-width="92"></div></div></div>
-            <div class="stat-bar-row"><div class="stat-bar-label"><span>Science</span><span>92%</span></div><div class="stat-bar-track"><div class="stat-bar-fill" data-width="92"></div></div></div>
-          </div>
-          <div class="key-facts">
-            <div class="key-fact"><div class="key-fact-label">Board</div><div class="key-fact-value">ICSE</div></div>
-            <div class="key-fact"><div class="key-fact-label">Type</div><div class="key-fact-value">Boarder</div></div>
-            <div class="key-fact"><div class="key-fact-label">ICSE Result</div><div class="key-fact-value hi">PASS</div></div>
-            <div class="key-fact"><div class="key-fact-label">Top Score</div><div class="key-fact-value hi">97 — CS</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- CONNECTOR 4 -->
-    <div class="path-connector" style="position:relative;">
-      <svg viewBox="0 0 960 220" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible;" xmlns="http://www.w3.org/2000/svg">
-        <path d="M 480,5 C 560,70 400,145 480,215" fill="none" stroke="#C3E41D" stroke-width="2" stroke-dasharray="10,7" stroke-linecap="round" opacity="0.5"/>
-        <path d="M 480,5 C 560,70 400,145 480,215" fill="none" stroke="rgba(195,228,29,0.07)" stroke-width="20" stroke-linecap="round"/>
-        <polygon points="0,-5 10,0 0,5" fill="#C3E41D" opacity="0.6" transform="translate(476,112) rotate(-78)"/>
-        <circle cx="480" cy="5"   r="4" fill="none" stroke="#C3E41D" stroke-width="1.5" opacity="0.5"/>
-        <circle cx="480" cy="215" r="4" fill="none" stroke="#C3E41D" stroke-width="1.5" opacity="0.5"/>
-      </svg>
-      <div class="year-node">2008 – 2014</div>
-      <div class="path-annotation" style="left:53%;top:160px;">Birpur, Bihar</div>
-    </div>
-
-    <!-- CARD 5: New Cambridge -->
-    <div class="scene">
-      <div class="detail-card" id="card-0">
-        <div class="card-left">
-          <div class="card-stage-num">I</div>
-          <div class="card-logo"><img src="resources/logos/newCambridge_LOGO.png" alt="New Cambridge Logo"/></div>
-          <div class="card-badge">Primary Education</div>
-          <h2 class="card-school-name">New Cambridge Residential School</h2>
-          <div class="card-location"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>Birpur, Supaul, Bihar</div>
-          <div class="card-years">Nursery &ndash; Class V &nbsp;·&nbsp; 2008 &ndash; 2014</div>
-          <p class="card-desc">The foundation of everything began here in my hometown. As a day scholar at this CBSE primary school, I spent my earliest years of formal education building curiosity, discipline, and a love for learning. These were the years of firsts — first examinations, first friendships, and first lessons in what it truly means to show up and try.</p>
-          <div class="card-special">
-            <div class="card-special-title">&#9670; Special Mention</div>
-            <div class="mentor-item">
-              <div class="mentor-icon"><svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div>
-              <div>
-                <div class="mentor-name">Shri B.M. Malakar Sir</div>
-                <div class="mentor-note">Hindi &amp; Sanskrit teacher who instilled values of honesty, discipline, and cultural pride — lessons that outlast any textbook.</div>
-              </div>
+          <div class="panel-block">
+            <div class="panel-block-title">Progress · Class IV (2012–13)</div>
+            <div class="bar-row"><div class="bar-label"><span>Hindi</span><span>94%</span></div><div class="bar-track"><div class="bar-fill" data-width="94"></div></div></div>
+            <div class="bar-row"><div class="bar-label"><span>English</span><span>93%</span></div><div class="bar-track"><div class="bar-fill" data-width="93"></div></div></div>
+            <div class="bar-row"><div class="bar-label"><span>Mathematics</span><span>85%</span></div><div class="bar-track"><div class="bar-fill" data-width="85"></div></div></div>
+            <div class="bar-row"><div class="bar-label"><span>Science</span><span>80%</span></div><div class="bar-track"><div class="bar-fill" data-width="80"></div></div></div>
+            <div class="metric-grid" style="margin-top:1rem">
+              <div class="metric-box"><div class="metric-lbl">Class II Rank</div><div class="metric-val hi">7th</div></div>
+              <div class="metric-box"><div class="metric-lbl">Division</div><div class="metric-val hi">A</div></div>
             </div>
           </div>
         </div>
-        <div class="card-right">
-          <div>
-            <div class="marks-section-title">Academic Record &middot; Class II</div>
-            <table class="marks-table">
-              <thead><tr><th>Subject</th><th style="text-align:right">Score / 100</th></tr></thead>
-              <tbody>
-                <tr><td>Science</td><td class="score-cell">98</td></tr>
-                <tr><td>Mathematics</td><td class="score-cell">95</td></tr>
-                <tr><td>English</td><td class="score-cell">92</td></tr>
-                <tr><td>Hindi</td><td class="score-cell">85</td></tr>
-                <tr><td>G.K. (out of 50)</td><td class="score-cell">43</td></tr>
-              </tbody>
-              <tfoot><tr class="total-row"><td>Total (550)</td><td class="score-cell">507 &nbsp;·&nbsp; Division A</td></tr></tfoot>
-            </table>
-          </div>
-          <div>
-            <div class="marks-section-title">Progress &middot; Class IV (2012–13)</div>
-            <div class="stat-bar-row"><div class="stat-bar-label"><span>Hindi</span><span>94%</span></div><div class="stat-bar-track"><div class="stat-bar-fill" data-width="94"></div></div></div>
-            <div class="stat-bar-row"><div class="stat-bar-label"><span>English</span><span>93%</span></div><div class="stat-bar-track"><div class="stat-bar-fill" data-width="93"></div></div></div>
-            <div class="stat-bar-row"><div class="stat-bar-label"><span>Mathematics</span><span>85%</span></div><div class="stat-bar-track"><div class="stat-bar-fill" data-width="85"></div></div></div>
-            <div class="stat-bar-row"><div class="stat-bar-label"><span>Science</span><span>80%</span></div><div class="stat-bar-track"><div class="stat-bar-fill" data-width="80"></div></div></div>
-          </div>
-          <div class="key-facts">
-            <div class="key-fact"><div class="key-fact-label">Board</div><div class="key-fact-value">CBSE</div></div>
-            <div class="key-fact"><div class="key-fact-label">Type</div><div class="key-fact-value">Day Scholar</div></div>
-            <div class="key-fact"><div class="key-fact-label">Class II Rank</div><div class="key-fact-value hi">7th</div></div>
-            <div class="key-fact"><div class="key-fact-label">Division</div><div class="key-fact-value hi">A</div></div>
-          </div>
+
+        <div class="milestone-box">
+          <div class="milestone-label">⬡ Special Mention</div>
+          <div class="milestone-name">Shri B.M. Malakar Sir</div>
+          <div class="milestone-note">Hindi &amp; Sanskrit teacher who instilled values of honesty, discipline, and cultural pride — lessons that outlast any textbook. The kind of teacher you carry with you forever.</div>
         </div>
       </div>
-    </div>
 
-    <!-- TERMINAL -->
-    <div style="position:relative;text-align:center;padding:3rem 2rem 0;pointer-events:none;z-index:2;">
-      <svg viewBox="0 0 200 60" width="200" height="60" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto 1rem;">
-        <line x1="100" y1="0" x2="100" y2="35" stroke="#C3E41D" stroke-width="1.5" stroke-dasharray="6,5" opacity="0.4"/>
-        <circle cx="100" cy="45" r="8" fill="none" stroke="#C3E41D" stroke-width="1.5" opacity="0.4"/>
-        <circle cx="100" cy="45" r="3" fill="#C3E41D" opacity="0.4"/>
-      </svg>
-      <div style="font-family:'Fira Code',monospace;font-size:0.62rem;letter-spacing:0.22em;color:rgba(195,228,29,0.35);text-transform:uppercase;">Where it all began · 2008</div>
-    </div>
+    </div><!-- /tab-content-wrap -->
+  </div><!-- /tab-layout -->
 
-  </div><!-- end .journey-stream -->
+</div><!-- /page-wrapper -->
 
-  <div class="edu-footer"><a href="index.html">&larr; Back to Portfolio</a></div>
+<div class="page-footer"><a href="index.html">&larr; Back to Portfolio</a></div>
 
-  <script src="script.js"></script>
-  <script>
-    /* Animate stat bars on scroll */
-    function animateBars(container) {
-      container.querySelectorAll('.stat-bar-fill').forEach(bar => {
-        const w = bar.dataset.width;
-        bar.style.width = '0%';
-        requestAnimationFrame(() => requestAnimationFrame(() => { bar.style.width = w + '%'; }));
-      });
-    }
-    const barObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) { animateBars(entry.target); barObserver.unobserve(entry.target); }
-      });
-    }, { threshold: 0.2 });
-    document.querySelectorAll('.detail-card').forEach(card => barObserver.observe(card));
+<script src="script.js"></script>
+<script>
+(function() {
+  /* ── Tab switching ── */
+  const btns = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.tab-panel');
 
-    /* Scroll fade-in for cards */
-    const fadeObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-          fadeObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.08 });
-    document.querySelectorAll('.detail-card').forEach(card => {
-      card.style.opacity = '0';
-      card.style.transform = 'translateY(32px)';
-      card.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
-      fadeObserver.observe(card);
+  function activateTab(tabId) {
+    btns.forEach(b => {
+      const isActive = b.dataset.tab === tabId;
+      b.classList.toggle('active', isActive);
+      b.setAttribute('aria-selected', isActive);
     });
-  </script>
+    panels.forEach(p => {
+      const isActive = p.id === 'panel-' + tabId;
+      p.classList.toggle('active', isActive);
+      if (isActive) animateBars(p);
+    });
+  }
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => activateTab(btn.dataset.tab));
+  });
+
+  /* ── Animate bars in panel ── */
+  function animateBars(panel) {
+    panel.querySelectorAll('.bar-fill').forEach(bar => {
+      bar.style.width = '0%';
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        bar.style.width = (bar.dataset.width || 0) + '%';
+      }));
+    });
+  }
+
+  /* ── Animate initial active panel ── */
+  animateBars(document.querySelector('.tab-panel.active'));
+
+  /* ── Keyboard nav ── */
+  document.querySelector('.tab-sidebar').addEventListener('keydown', e => {
+    const current = document.querySelector('.tab-btn.active');
+    const all = [...btns];
+    const idx = all.indexOf(current);
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+      e.preventDefault();
+      all[(idx + 1) % all.length].click();
+      all[(idx + 1) % all.length].focus();
+    }
+    if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      all[(idx - 1 + all.length) % all.length].click();
+      all[(idx - 1 + all.length) % all.length].focus();
+    }
+  });
+})();
+</script>
 </body>
 </html>
