@@ -7,33 +7,39 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&family=Antic&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --map-bg: #d4b896;
-      --map-dark: #4a3520;
-      --map-ink: #2d1f0e;
-      --map-red: #8b2020;
-      --map-gold: #b8860b;
-      --map-water: #7aa3b8;
-      --map-forest: #5a7a4a;
-      --map-path: #8b6914;
-      --accent: #b8860b;
-      --logo-bg: #e1d8c0;
-      --bg-deep: #1a1208;
-      --bg-mid: #0f0b05;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: var(--bg-deep); font-family: 'Crimson Text', Georgia, serif; color: var(--map-ink); overflow-x: hidden; }
+    /* ── Education page overrides ── */
+    body { background: var(--bg); color: var(--text-primary); font-family: 'DM Mono', monospace; }
 
     /* NAV */
-    .edu-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2.5rem; background: rgba(26,18,8,0.93); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(200,160,80,0.2); }
-    .edu-nav .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem; color: #e8d5b0; text-decoration: none; letter-spacing: 0.05em; }
+    .edu-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2.5rem;
+      background: rgba(0,0,0,0.9);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-mid);
+    }
+    .edu-nav .nav-logo {
+      font-family: 'Fira Code', monospace; font-weight: 700; font-size: 1.2rem;
+      color: var(--text-primary); text-decoration: none; letter-spacing: 0.05em;
+    }
     .edu-nav .nav-logo .dot { color: var(--accent); }
     .edu-nav .nav-links { display: flex; gap: 2rem; list-style: none; margin-right: 1.8rem; }
-    .edu-nav .nav-links a { font-family: 'Syne', sans-serif; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: #a09070; text-decoration: none; transition: color 0.2s; }
-    .edu-nav .nav-links a:hover, .edu-nav .nav-links a.active { color: var(--accent); }
-    .edu-nav .nav-cta { font-family: 'Syne', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--map-ink); background: var(--accent); padding: 0.5rem 1.2rem; text-decoration: none; font-weight: 700; transition: opacity 0.2s; }
+    .edu-nav .nav-links a {
+      font-family: 'Syne', sans-serif; font-size: 0.75rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-secondary); text-decoration: none; transition: color 0.2s;
+    }
+    .edu-nav .nav-links a:hover,
+    .edu-nav .nav-links a.active { color: var(--accent); }
+    .edu-nav .nav-cta {
+      font-family: 'Syne', sans-serif; font-size: 0.72rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #000; background: var(--accent);
+      padding: 0.45rem 1.2rem; text-decoration: none; font-weight: 700;
+      transition: opacity 0.2s; border-radius: 2px;
+    }
     .edu-nav .nav-cta:hover { opacity: 0.85; }
 
     /* HEADER */
@@ -41,203 +47,195 @@
       padding: 8rem 4rem 4rem;
       text-align: center;
       position: relative;
-      background: linear-gradient(180deg, #1a1208 0%, #1a1208 60%, transparent 100%);
       overflow: hidden;
     }
-    .page-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 100%, rgba(184,134,11,0.12) 0%, transparent 70%); pointer-events:none; }
-    .page-header h1 { font-family: 'Cinzel', serif; font-size: clamp(2.5rem, 6vw, 5rem); color: #e8d5b0; font-weight: 700; letter-spacing: 0.15em; text-shadow: 0 2px 20px rgba(184,134,11,0.4); position: relative; }
-    .page-header h1 span { color: var(--map-gold); }
-    .page-header p { font-family: 'Crimson Text', serif; font-size: 1.15rem; font-style: italic; color: #9a8060; margin-top: 0.75rem; position: relative; }
-    .ornament { display: flex; align-items: center; justify-content: center; gap: 1rem; margin: 1.5rem 0; position: relative; }
-    .ornament-line { flex: 1; max-width: 200px; height: 1px; background: linear-gradient(90deg, transparent, var(--map-gold), transparent); }
-    .ornament-diamond { width: 10px; height: 10px; background: var(--map-gold); transform: rotate(45deg); }
-
-    /* ══════════════════════════════════
-       JOURNEY STREAM — the main layout
-       ══════════════════════════════════ */
-    .journey-stream {
-      position: relative;
-      padding: 0 0 6rem;
-      /* no background — transparent so body color shows through */
+    .page-header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 100%, rgba(195,228,29,0.06) 0%, transparent 70%);
+      pointer-events: none;
     }
-
-    /* ── CONNECTOR: SVG curved path between each card ── */
-    .path-connector {
+    .page-header h1 {
+      font-family: 'Fira Code', monospace; font-size: clamp(2.2rem, 6vw, 4.5rem);
+      color: var(--text-primary); font-weight: 700; letter-spacing: -0.02em;
       position: relative;
-      width: 100%;
-      height: 220px;
-      overflow: visible;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    }
+    .page-header h1 span { color: var(--accent); }
+    .page-header p {
+      font-family: 'Antic', sans-serif; font-size: 1.05rem;
+      color: var(--text-secondary); margin-top: 0.75rem; position: relative;
+    }
+    .ornament { display: flex; align-items: center; justify-content: center; gap: 1rem; margin: 1.5rem 0; position: relative; }
+    .ornament-line { flex: 1; max-width: 200px; height: 1px; background: linear-gradient(90deg, transparent, var(--accent), transparent); opacity: 0.3; }
+    .ornament-diamond { width: 8px; height: 8px; background: var(--accent); transform: rotate(45deg); }
+
+    /* JOURNEY STREAM */
+    .journey-stream { position: relative; padding: 0 0 6rem; }
+
+    /* PATH CONNECTOR */
+    .path-connector {
+      position: relative; width: 100%; height: 220px;
+      overflow: visible; display: flex; align-items: center; justify-content: center;
       z-index: 2;
     }
-    .path-connector svg {
-      width: 100%;
-      height: 220px;
-      overflow: visible;
-    }
+    .path-connector svg { width: 100%; height: 220px; overflow: visible; }
 
-    /* ── SCENE: wrapper that holds card + decorative elements ── */
-    .scene {
-      position: relative;
-      width: 100%;
-      padding: 0 2rem;
-    }
+    /* SCENE */
+    .scene { position: relative; width: 100%; padding: 0 2rem; }
 
-    /* Cards have no hard borders at top/bottom — they fade into bg */
+    /* DETAIL CARD */
     .detail-card {
-      position: relative;
-      z-index: 5;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      max-width: 950px;
-      margin: 0 auto;
-      border-radius: 6px;
-      overflow: hidden;
-      box-shadow: 0 8px 60px rgba(0,0,0,0.7);
-      /* Feathered top/bottom — card melts into background */
-      -webkit-mask-image: linear-gradient(
-        to bottom,
-        transparent 0%,
-        black 8%,
-        black 92%,
-        transparent 100%
-      );
-      mask-image: linear-gradient(
-        to bottom,
-        transparent 0%,
-        black 8%,
-        black 92%,
-        transparent 100%
-      );
+      position: relative; z-index: 5;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0; max-width: 950px; margin: 0 auto;
+      border-radius: 4px; overflow: hidden;
+      box-shadow: 0 8px 60px rgba(0,0,0,0.8), 0 0 0 1px var(--border-dim);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
+      mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
     }
 
-    .card-left { background: var(--map-bg); border: 3px solid var(--map-dark); padding: 2.5rem; position: relative; overflow: hidden; }
-    .card-stage-num { font-family: 'Cinzel', serif; font-size: 4rem; font-weight: 700; color: rgba(74,53,32,0.1); position: absolute; top: 1rem; right: 1.5rem; line-height: 1; user-select: none; }
-    .card-logo { width: 68px; height: 68px; border-radius: 50%; border: 2px solid var(--map-gold); overflow: hidden; background: var(--logo-bg); margin-bottom: 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.25); }
-    .card-logo img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
-    .card-badge { display: inline-block; font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.15em; color: var(--map-bg); background: var(--map-dark); padding: 4px 14px; margin-bottom: 1rem; text-transform: uppercase; }
-    .card-school-name { font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 700; color: var(--map-dark); line-height: 1.2; margin-bottom: 0.4rem; }
-    .card-location { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--map-path); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.4rem; }
-    .card-location svg { width: 12px; height: 12px; fill: var(--map-path); flex-shrink: 0; }
-    .card-years { font-family: 'Cinzel', serif; font-size: 0.8rem; color: var(--map-red); letter-spacing: 0.1em; margin-bottom: 1.5rem; }
-    .card-desc { font-family: 'Crimson Text', serif; font-size: 1.05rem; line-height: 1.75; color: #3a2810; margin-bottom: 1rem; }
-    .card-special { border-top: 1px solid rgba(74,53,32,0.3); padding-top: 1rem; margin-top: 0.5rem; }
-    .card-special-title { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.15em; color: var(--map-path); text-transform: uppercase; margin-bottom: 0.7rem; }
+    .card-left {
+      background: var(--bg-card);
+      border-right: 1px solid var(--border-dim);
+      padding: 2.5rem; position: relative; overflow: hidden;
+    }
+    .card-stage-num {
+      font-family: 'Fira Code', monospace; font-size: 4rem; font-weight: 700;
+      color: rgba(195,228,29,0.06); position: absolute; top: 1rem; right: 1.5rem;
+      line-height: 1; user-select: none;
+    }
+    .card-logo {
+      width: 64px; height: 64px; border-radius: 50%;
+      border: 1px solid var(--border); overflow: hidden;
+      background: var(--bg-card-alt); margin-bottom: 1rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .card-logo img { width: 100%; height: 100%; object-fit: contain; padding: 6px; }
+    .card-badge {
+      display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.62rem;
+      letter-spacing: 0.15em; color: var(--accent); background: var(--accent-glow);
+      border: 1px solid var(--border); padding: 3px 12px; margin-bottom: 1rem;
+      text-transform: uppercase; border-radius: 2px;
+    }
+    .card-school-name {
+      font-family: 'Fira Code', monospace; font-size: 1.2rem; font-weight: 700;
+      color: var(--text-primary); line-height: 1.25; margin-bottom: 0.4rem;
+    }
+    .card-location {
+      font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--text-muted);
+      margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.4rem;
+    }
+    .card-location svg { width: 12px; height: 12px; stroke: var(--text-muted); flex-shrink: 0; }
+    .card-years {
+      font-family: 'DM Mono', monospace; font-size: 0.75rem;
+      color: var(--accent); letter-spacing: 0.08em; margin-bottom: 1.5rem; opacity: 0.8;
+    }
+    .card-desc {
+      font-family: 'Antic', sans-serif; font-size: 0.95rem;
+      line-height: 1.8; color: var(--text-secondary); margin-bottom: 1rem;
+    }
+    .card-special { border-top: 1px solid var(--border-dim); padding-top: 1rem; margin-top: 0.5rem; }
+    .card-special-title {
+      font-family: 'Fira Code', monospace; font-size: 0.62rem; letter-spacing: 0.15em;
+      color: var(--accent); text-transform: uppercase; margin-bottom: 0.7rem; opacity: 0.7;
+    }
     .mentor-item { display: flex; gap: 0.75rem; margin-bottom: 0.75rem; align-items: flex-start; }
-    .mentor-icon { width: 28px; height: 28px; border-radius: 50%; background: var(--map-dark); border: 2px solid var(--map-gold); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .mentor-icon svg { width: 12px; height: 12px; fill: var(--map-gold); }
-    .mentor-name { font-family: 'Cinzel', serif; font-size: 0.8rem; font-weight: 600; color: var(--map-dark); }
-    .mentor-note { font-family: 'Crimson Text', serif; font-size: 0.9rem; font-style: italic; color: #5a4030; line-height: 1.4; }
+    .mentor-icon {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--accent-glow); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .mentor-icon svg { width: 12px; height: 12px; stroke: var(--accent); }
+    .mentor-name { font-family: 'Fira Code', monospace; font-size: 0.78rem; font-weight: 600; color: var(--text-primary); }
+    .mentor-note { font-family: 'Antic', sans-serif; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; }
     .achievement-list { list-style: none; margin: 0.5rem 0 1rem; }
-    .achievement-list li { display: flex; gap: 0.6rem; align-items: flex-start; margin-bottom: 0.45rem; font-family: 'Crimson Text', serif; font-size: 0.95rem; color: #3a2810; line-height: 1.4; }
-    .achievement-list li::before { content: '◆'; color: var(--map-gold); font-size: 0.6rem; margin-top: 4px; flex-shrink: 0; }
+    .achievement-list li {
+      display: flex; gap: 0.6rem; align-items: flex-start; margin-bottom: 0.45rem;
+      font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5;
+    }
+    .achievement-list li::before { content: '▸'; color: var(--accent); font-size: 0.65rem; margin-top: 2px; flex-shrink: 0; }
 
-    .card-right { background: #1a1208; border: 3px solid var(--map-dark); border-left: none; padding: 2.5rem; display: flex; flex-direction: column; gap: 2rem; }
-    .marks-section-title { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.2em; color: var(--map-gold); text-transform: uppercase; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem; }
-    .marks-section-title::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--map-gold), transparent); }
+    /* CARD RIGHT */
+    .card-right {
+      background: var(--bg-card-alt);
+      padding: 2.5rem; display: flex; flex-direction: column; gap: 2rem;
+    }
+    .marks-section-title {
+      font-family: 'Fira Code', monospace; font-size: 0.65rem; letter-spacing: 0.2em;
+      color: var(--accent); text-transform: uppercase; margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.75rem; opacity: 0.8;
+    }
+    .marks-section-title::after {
+      content: ''; flex: 1; height: 1px;
+      background: linear-gradient(90deg, var(--border), transparent);
+    }
     .marks-table { width: 100%; border-collapse: collapse; }
-    .marks-table th { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em; color: var(--map-path); text-transform: uppercase; text-align: left; padding: 0.4rem 0.6rem; border-bottom: 1px solid rgba(184,134,11,0.3); }
-    .marks-table td { font-family: 'Crimson Text', serif; font-size: 0.95rem; color: #c0a878; padding: 0.45rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.04); }
-    .marks-table tr:hover td { color: #e8d5b0; background: rgba(184,134,11,0.05); }
-    .score-cell { font-family: 'DM Mono', monospace !important; font-size: 0.85rem !important; color: var(--map-gold) !important; text-align: right !important; }
-    .total-row td { color: #e8d5b0 !important; font-family: 'Cinzel', serif !important; font-size: 0.85rem !important; border-top: 1px solid rgba(184,134,11,0.4) !important; }
+    .marks-table th {
+      font-family: 'Fira Code', monospace; font-size: 0.58rem; letter-spacing: 0.1em;
+      color: var(--text-muted); text-transform: uppercase; text-align: left;
+      padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--border-dim);
+    }
+    .marks-table td {
+      font-family: 'DM Mono', monospace; font-size: 0.82rem; color: var(--text-secondary);
+      padding: 0.4rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+    .marks-table tr:hover td { color: var(--text-primary); background: var(--accent-glow); }
+    .score-cell { font-family: 'Fira Code', monospace !important; font-size: 0.82rem !important; color: var(--accent) !important; text-align: right !important; }
+    .total-row td { color: var(--text-primary) !important; font-family: 'Fira Code', monospace !important; font-size: 0.82rem !important; border-top: 1px solid var(--border) !important; }
+
     .stat-bar-row { margin-bottom: 0.9rem; }
-    .stat-bar-label { display: flex; justify-content: space-between; font-family: 'Crimson Text', serif; font-size: 0.9rem; color: #a08060; margin-bottom: 4px; }
-    .stat-bar-label span:last-child { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--map-gold); }
-    .stat-bar-track { height: 4px; background: rgba(255,255,255,0.07); border-radius: 2px; overflow: hidden; }
-    .stat-bar-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--map-gold), var(--accent)); width: 0%; transition: width 1s cubic-bezier(0.4,0,0.2,1); }
+    .stat-bar-label { display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 4px; }
+    .stat-bar-label span:last-child { font-family: 'Fira Code', monospace; font-size: 0.72rem; color: var(--accent); }
+    .stat-bar-track { height: 3px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden; }
+    .stat-bar-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--accent), rgba(195,228,29,0.5)); width: 0%; transition: width 1s cubic-bezier(0.4,0,0.2,1); }
+
     .key-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-    .key-fact { background: rgba(184,134,11,0.07); border: 1px solid rgba(184,134,11,0.2); padding: 0.75rem 1rem; }
-    .key-fact-label { font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.12em; color: var(--map-path); text-transform: uppercase; margin-bottom: 0.3rem; }
-    .key-fact-value { font-family: 'DM Mono', monospace; font-size: 1rem; color: #e8d5b0; }
+    .key-fact { background: var(--bg-card); border: 1px solid var(--border-dim); padding: 0.75rem 1rem; border-radius: 3px; }
+    .key-fact-label { font-family: 'Fira Code', monospace; font-size: 0.55rem; letter-spacing: 0.12em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.3rem; }
+    .key-fact-value { font-family: 'DM Mono', monospace; font-size: 0.95rem; color: var(--text-primary); }
     .key-fact-value.hi { color: var(--accent); }
 
-    .quote-box { background: rgba(184,134,11,0.07); border: 1px solid rgba(184,134,11,0.2); padding: 1.5rem; }
-    .quote-box p { font-family: 'Crimson Text', serif; font-size: 1.05rem; font-style: italic; color: #c0a878; line-height: 1.7; }
+    .quote-box { background: var(--accent-glow); border: 1px solid var(--border); padding: 1.4rem; border-radius: 3px; }
+    .quote-box p { font-family: 'Antic', sans-serif; font-size: 0.95rem; color: var(--text-secondary); line-height: 1.75; }
+
     .cgpa-display { text-align: center; padding: 1rem 0; }
-    .cgpa-num { font-family: 'Cinzel', serif; font-size: 4rem; font-weight: 700; color: var(--accent); line-height: 1; text-shadow: 0 0 30px rgba(184,134,11,0.3); }
-    .cgpa-label { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.15em; color: var(--map-path); margin-bottom: 0.5rem; }
-    .cgpa-sub { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: #6a8040; margin-top: 0.4rem; }
+    .cgpa-num { font-family: 'Fira Code', monospace; font-size: 4rem; font-weight: 700; color: var(--accent); line-height: 1; text-shadow: 0 0 40px rgba(195,228,29,0.2); }
+    .cgpa-label { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.15em; color: var(--text-muted); margin-bottom: 0.5rem; }
+    .cgpa-sub { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--text-muted); margin-top: 0.4rem; }
 
-    /* ── DECORATIVE SCENE ELEMENTS ── */
-    .decor-img {
-      position: absolute;
-      object-fit: contain;
-      pointer-events: none;
-    }
-    /* One element per connector, hugging the path (path runs down center ~50%) */
-    /* Connector 1 — ship just left of path curve */
-    .c1-ship  { left: 30%; top: 55px;  width: 105px; opacity: 0.72; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.4)); animation: floatY 6s ease-in-out infinite; }
-    /* Connector 2 — boat slightly right of path, mid-height */
-    .c2-boat  { left: 54%; top: 75px;  width: 145px; opacity: 0.46; mix-blend-mode: screen; }
-    /* Connector 3 — boat under path curve, slightly left */
-    .c3-lake  { left: 35%; top: 88px;  width: 82px;  opacity: 0.78; mix-blend-mode: screen; animation: floatY 5.5s ease-in-out infinite 0.8s; }
-    /* Connector 4 — compass kissing right side of path */
-    .c4-compass { left: 52%; top: 62px; width: 88px; opacity: 0.65; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)); animation: spinSlow 30s linear infinite; }
-
-    @keyframes floatY {
-      0%,100% { transform: translateY(0px); }
-      50%      { transform: translateY(-8px); }
-    }
-    @keyframes floatY-flip {
-      0%,100% { transform: scaleX(-1) translateY(0px); }
-      50%      { transform: scaleX(-1) translateY(-8px); }
-    }
-    @keyframes spinSlow {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
-    }
-
-    /* Year marker node on the path */
+    /* PATH CONNECTOR VISUALS */
     .year-node {
-      position: absolute;
-      left: 50%;
-      top: 50%;
+      position: absolute; left: 50%; top: 50%;
       transform: translate(-50%, -50%);
-      font-family: 'Cinzel', serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.18em;
-      color: var(--map-gold);
-      background: rgba(26,18,8,0.9);
-      border: 1px solid rgba(184,134,11,0.45);
-      padding: 5px 14px;
-      pointer-events: none;
-      z-index: 6;
-      text-align: center;
-      white-space: nowrap;
+      font-family: 'Fira Code', monospace; font-size: 0.68rem; letter-spacing: 0.16em;
+      color: var(--accent); background: rgba(0,0,0,0.92); border: 1px solid var(--border);
+      padding: 5px 14px; pointer-events: none; z-index: 6;
+      text-align: center; white-space: nowrap; border-radius: 2px;
     }
-
-    /* Inline annotation text beside path */
     .path-annotation {
-      position: absolute;
-      font-family: 'Crimson Text', serif;
-      font-size: 0.8rem;
-      font-style: italic;
-      color: rgba(184,134,11,0.55);
-      pointer-events: none;
-      z-index: 3;
+      position: absolute; font-family: 'DM Mono', monospace; font-size: 0.72rem;
+      color: rgba(195,228,29,0.35); pointer-events: none; z-index: 3;
     }
 
     /* Footer */
-    .edu-footer { background: var(--bg-mid); border-top: 1px solid rgba(184,134,11,0.15); padding: 3rem; text-align: center; }
-    .edu-footer a { font-family: 'Syne', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: #6a5a40; text-decoration: none; transition: color 0.2s; }
-    .edu-footer a:hover { color: var(--map-gold); }
+    .edu-footer {
+      background: var(--bg-mid); border-top: 1px solid var(--border-mid);
+      padding: 3rem; text-align: center;
+    }
+    .edu-footer a {
+      font-family: 'Syne', sans-serif; font-size: 0.72rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.2s;
+    }
+    .edu-footer a:hover { color: var(--accent); }
 
     @media (max-width: 768px) {
       .edu-nav .nav-links { display: none; }
       .page-header { padding: 6rem 1.5rem 2rem; }
       .detail-card { grid-template-columns: 1fr; }
-      .card-right { border-left: 3px solid var(--map-dark); border-top: none; }
+      .card-right { border-top: 1px solid var(--border-dim); }
       .scene { padding: 0 0.75rem; }
       .path-connector { height: 160px; }
-      .c1-ship   { width: 70px;  top: 40px; left: 32%; }
-      .c2-boat   { width: 100px; top: 55px; left: 52%; }
-      .c3-lake   { width: 55px;  top: 65px; left: 33%; }
-      .c4-compass{ width: 60px;  top: 48px; left: 50%; }
-      .year-node { font-size: 0.58rem; }
     }
   </style>
 </head>
@@ -245,6 +243,7 @@
 
   <div class="cursor" id="cursor"></div>
   <div class="cursor-trail" id="cursorTrail"></div>
+  <div class="bg-grid"></div>
 
   <nav class="edu-nav">
     <a href="index.html" class="nav-logo">AK<span class="dot">.</span></a>
@@ -255,10 +254,10 @@
       <li><a href="index.html#skills">Skills</a></li>
       <li><a href="index.html#responsibilities">Roles</a></li>
     </ul>
-    <a href="/cdn-cgi/l/email-protection#d8b9a1adabb0b3aae9f6adbfeaebf6bbab98b6b1aca8f6b9bbf6b1b6" class="nav-cta">Hire Me</a>
+    <a href="mailto:ayushkr1.ug23.cs@nitp.ac.in" class="nav-cta">Hire Me</a>
   </nav>
 
-  <!-- ═══════════════════════════════ HEADER ═══════════════════════════════ -->
+  <!-- HEADER -->
   <div class="page-header">
     <h1>The <span>Journey</span> of Learning</h1>
     <div class="ornament">
@@ -266,13 +265,13 @@
       <div class="ornament-diamond"></div>
       <div class="ornament-line"></div>
     </div>
-    <p>Five institutions. One path. A story etched in ink and memory.</p>
+    <p>Five institutions. One path. A story etched in code and memory.</p>
   </div>
 
-  <!-- ═══════════════════════════════ JOURNEY STREAM ═══════════════════════ -->
+  <!-- JOURNEY STREAM -->
   <div class="journey-stream">
 
-    <!-- ══ CARD 1: NIT Patna (most recent) ══ -->
+    <!-- CARD 1: NIT Patna -->
     <div class="scene">
       <div class="detail-card" id="card-4">
         <div class="card-left">
@@ -280,21 +279,27 @@
           <div class="card-logo"><img src="resources/logos/NITP_LOGO.png" alt="NIT Patna Logo"/></div>
           <div class="card-badge">B.Tech Undergraduate</div>
           <h2 class="card-school-name">National Institute of Technology, Patna</h2>
-          <div class="card-location"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>Patna, Bihar</div>
-          <div class="card-years">2023 &ndash; May 2027 &nbsp;&middot;&nbsp; B.Tech CSE</div>
+          <div class="card-location">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+            Patna, Bihar
+          </div>
+          <div class="card-years">2023 &ndash; May 2027 &nbsp;·&nbsp; B.Tech CSE</div>
           <p class="card-desc">Admitted through JEE Mains, I began at NIT Patna in the Mechanical Engineering department before successfully transferring to Computer Science and Engineering — aligning my academic trajectory with my true passion. Currently maintaining a CGPA of 9.41, I have been active in both technical competitions and the campus robotics community.</p>
           <ul class="achievement-list">
             <li>Class Representative, ME Section A (2023–24)</li>
-            <li>Active Member, Robotics Club &mdash; designed and built a full-metal combat robot for RoboWar</li>
+            <li>Active Member, Robotics Club — designed and built a full-metal combat robot for RoboWar</li>
             <li>1st Place, Hackathon at IIT Patna</li>
             <li>3rd Place, RoboWar Competition (after hardware failures on competition day)</li>
             <li>Successful branch transfer from Mechanical to Computer Science Engineering</li>
           </ul>
           <div class="card-special">
-            <div class="card-special-title">&#10022; Key Milestone</div>
+            <div class="card-special-title">&#9670; Key Milestone</div>
             <div class="mentor-item">
               <div class="mentor-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-              <div><div class="mentor-name">The Robot That Taught Resilience</div><div class="mentor-note">Three burnt Arduinos. Countless sleepless nights. A full-metal beast built from scratch — only to fail on the day of competition. Somehow still secured 3rd. The best lessons often come from the things that don't go to plan.</div></div>
+              <div>
+                <div class="mentor-name">The Robot That Taught Resilience</div>
+                <div class="mentor-note">Three burnt Arduinos. Countless sleepless nights. A full-metal beast built from scratch — only to fail on the day of competition. Somehow still secured 3rd. The best lessons often come from the things that don't go to plan.</div>
+              </div>
             </div>
           </div>
         </div>
@@ -317,8 +322,8 @@
               <tbody>
                 <tr><td>Institute</td><td class="score-cell">NIT Patna</td></tr>
                 <tr><td>Programme</td><td class="score-cell">B.Tech CSE</td></tr>
-                <tr><td>Expected Graduation</td><td class="score-cell" style="color:var(--accent)!important">May 2027</td></tr>
-                <tr><td>Current CGPA</td><td class="score-cell" style="color:var(--accent)!important">9.41</td></tr>
+                <tr><td>Expected Graduation</td><td class="score-cell">May 2027</td></tr>
+                <tr><td>Current CGPA</td><td class="score-cell">9.41</td></tr>
                 <tr><td>Admission Route</td><td class="score-cell">JEE Mains</td></tr>
               </tbody>
             </table>
@@ -333,38 +338,20 @@
       </div>
     </div>
 
-    <!-- ══ CONNECTOR 1: NIT Patna → Vibrant Academy ══ -->
+    <!-- CONNECTOR 1 -->
     <div class="path-connector" style="position:relative;">
-      <img src="resources/design elements/sailing_ship.png" class="decor-img c1-ship" alt=""/>
-
-      <!-- Curved SVG path -->
       <svg viewBox="0 0 960 220" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible;" xmlns="http://www.w3.org/2000/svg">
-        <!-- Main golden dashed journey path -->
-        <path d="M 480,5 C 360,60 600,160 480,215"
-          fill="none" stroke="#b8860b" stroke-width="2.5"
-          stroke-dasharray="10,7" stroke-linecap="round" opacity="0.65"/>
-        <!-- Soft ambient glow behind path -->
-        <path d="M 480,5 C 360,60 600,160 480,215"
-          fill="none" stroke="rgba(184,134,11,0.12)" stroke-width="18"
-          stroke-linecap="round"/>
-        <!-- Arrow mid-path -->
-        <polygon points="0,-5 10,0 0,5" fill="#b8860b" opacity="0.7"
-          transform="translate(471,118) rotate(92)"/>
-        <!-- Anchor dot top -->
-        <circle cx="480" cy="5"   r="5" fill="none" stroke="#b8860b" stroke-width="1.8" opacity="0.55"/>
-        <!-- Anchor dot bottom -->
-        <circle cx="480" cy="215" r="5" fill="none" stroke="#b8860b" stroke-width="1.8" opacity="0.55"/>
-        <!-- Flourish: small wavy sub-path hint -->
-        <path d="M 530,80 Q 580,100 570,135" fill="none" stroke="rgba(184,134,11,0.22)" stroke-width="1.2" stroke-dasharray="4,5"/>
+        <path d="M 480,5 C 360,60 600,160 480,215" fill="none" stroke="#C3E41D" stroke-width="2" stroke-dasharray="10,7" stroke-linecap="round" opacity="0.5"/>
+        <path d="M 480,5 C 360,60 600,160 480,215" fill="none" stroke="rgba(195,228,29,0.07)" stroke-width="20" stroke-linecap="round"/>
+        <polygon points="0,-5 10,0 0,5" fill="#C3E41D" opacity="0.6" transform="translate(471,118) rotate(92)"/>
+        <circle cx="480" cy="5"   r="4" fill="none" stroke="#C3E41D" stroke-width="1.5" opacity="0.5"/>
+        <circle cx="480" cy="215" r="4" fill="none" stroke="#C3E41D" stroke-width="1.5" opacity="0.5"/>
       </svg>
-
-      <!-- Year node -->
       <div class="year-node">2021 – 2022</div>
-      <!-- Annotation -->
       <div class="path-annotation" style="left:55%;top:28px;">Kota, Rajasthan</div>
     </div>
 
-    <!-- ══ CARD 2: Vibrant Academy ══ -->
+    <!-- CARD 2: Vibrant Academy -->
     <div class="scene">
       <div class="detail-card" id="card-3">
         <div class="card-left">
@@ -373,7 +360,7 @@
           <div class="card-badge">JEE Preparation</div>
           <h2 class="card-school-name">Vibrant Academy</h2>
           <div class="card-location"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>Kota, Rajasthan</div>
-          <div class="card-years">Drop Year &nbsp;&middot;&nbsp; 2021 &ndash; 2022</div>
+          <div class="card-years">Drop Year &nbsp;·&nbsp; 2021 &ndash; 2022</div>
           <p class="card-desc">After completing Class XII, I moved to Kota for a dedicated drop year of JEE preparation at Vibrant Academy — one of India's most competitive coaching environments. The year tested every dimension of discipline, focus, and resilience. It was here that I learned the difference between studying hard and studying smart, under the pressure of daily tests and cutthroat competition.</p>
           <ul class="achievement-list">
             <li>Achieved JEE Mains Percentile of 97.1</li>
@@ -381,10 +368,13 @@
             <li>Participated in the academy's annual marathon — an unexpected lesson in grit</li>
           </ul>
           <div class="card-special">
-            <div class="card-special-title">&#10022; The Marathon Moment</div>
+            <div class="card-special-title">&#9670; The Marathon Moment</div>
             <div class="mentor-item">
               <div class="mentor-icon"><svg viewBox="0 0 24 24"><path d="M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.6 13.9l1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3c1.3 1.5 3.3 2.5 5.5 2.5v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1l-5.2 2.2v4.7h2v-3.4l1.8-.7-1.6 8.1-4.9-1-.4 2 7 1.4z"/></svg></div>
-              <div><div class="mentor-name">Watching a 52-year-old professor finish 20km first</div><div class="mentor-note">I hadn't reached 5km. That moment reframed everything I thought I knew about effort and limits.</div></div>
+              <div>
+                <div class="mentor-name">Watching a 52-year-old professor finish 20km first</div>
+                <div class="mentor-note">I hadn't reached 5km. That moment reframed everything I thought I knew about effort and limits.</div>
+              </div>
             </div>
           </div>
         </div>
@@ -413,8 +403,8 @@
               <tbody>
                 <tr><td>Program Type</td><td class="score-cell">Drop Year</td></tr>
                 <tr><td>Target</td><td class="score-cell">JEE Mains &amp; Advanced</td></tr>
-                <tr><td>JEE Mains Percentile</td><td class="score-cell" style="color:var(--accent)!important">97.1</td></tr>
-                <tr><td>Outcome</td><td class="score-cell" style="color:var(--accent)!important">NIT Patna</td></tr>
+                <tr><td>JEE Mains Percentile</td><td class="score-cell">97.1</td></tr>
+                <tr><td>Outcome</td><td class="score-cell">NIT Patna</td></tr>
               </tbody>
             </table>
           </div>
@@ -428,29 +418,20 @@
       </div>
     </div>
 
-    <!-- ══ CONNECTOR 2: Vibrant → Mithila Public ══ -->
+    <!-- CONNECTOR 2 -->
     <div class="path-connector" style="position:relative;">
-      <img src="resources/design elements/lake.png" class="decor-img c2-boat" alt=""/>
-
       <svg viewBox="0 0 960 220" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible;" xmlns="http://www.w3.org/2000/svg">
-        <path d="M 480,5 C 620,55 340,165 480,215"
-          fill="none" stroke="#b8860b" stroke-width="2.5"
-          stroke-dasharray="10,7" stroke-linecap="round" opacity="0.65"/>
-        <path d="M 480,5 C 620,55 340,165 480,215"
-          fill="none" stroke="rgba(184,134,11,0.12)" stroke-width="18" stroke-linecap="round"/>
-        <polygon points="0,-5 10,0 0,5" fill="#b8860b" opacity="0.7"
-          transform="translate(487,118) rotate(-88)"/>
-        <circle cx="480" cy="5"   r="5" fill="none" stroke="#b8860b" stroke-width="1.8" opacity="0.55"/>
-        <circle cx="480" cy="215" r="5" fill="none" stroke="#b8860b" stroke-width="1.8" opacity="0.55"/>
-        <!-- Extra ornamental wavy line -->
-        <path d="M 400,60 Q 350,95 370,140" fill="none" stroke="rgba(184,134,11,0.2)" stroke-width="1.2" stroke-dasharray="4,5"/>
+        <path d="M 480,5 C 620,55 340,165 480,215" fill="none" stroke="#C3E41D" stroke-width="2" stroke-dasharray="10,7" stroke-linecap="round" opacity="0.5"/>
+        <path d="M 480,5 C 620,55 340,165 480,215" fill="none" stroke="rgba(195,228,29,0.07)" stroke-width="20" stroke-linecap="round"/>
+        <polygon points="0,-5 10,0 0,5" fill="#C3E41D" opacity="0.6" transform="translate(487,118) rotate(-88)"/>
+        <circle cx="480" cy="5"   r="4" fill="none" stroke="#C3E41D" stroke-width="1.5" opacity="0.5"/>
+        <circle cx="480" cy="215" r="4" fill="none" stroke="#C3E41D" stroke-width="1.5" opacity="0.5"/>
       </svg>
-
       <div class="year-node">2019 – 2021</div>
       <div class="path-annotation" style="right:52%;top:30px;text-align:right;">Araria, Bihar</div>
     </div>
 
-    <!-- ══ CARD 3: Mithila Public School ══ -->
+    <!-- CARD 3: Mithila Public School -->
     <div class="scene">
       <div class="detail-card" id="card-2">
         <div class="card-left">
@@ -459,7 +440,7 @@
           <div class="card-badge">Senior Secondary</div>
           <h2 class="card-school-name">Mithila Public School</h2>
           <div class="card-location"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>Araria, Bihar</div>
-          <div class="card-years">Class XI &ndash; XII &nbsp;&middot;&nbsp; 2019 &ndash; 2021</div>
+          <div class="card-years">Class XI &ndash; XII &nbsp;·&nbsp; 2019 &ndash; 2021</div>
           <p class="card-desc">Classes XI and XII at Mithila Public School coincided with intensive JEE preparation and the disruption of the COVID-19 pandemic. Enrolled simultaneously at a coaching institute, school attendance was maintained at the minimum required threshold. The pandemic further compressed academic timelines, yet the CBSE board examinations were cleared with 84.5%.</p>
           <ul class="achievement-list">
             <li>Cleared CBSE Class XII Board Examination with 84.5%</li>
@@ -467,10 +448,13 @@
             <li>Maintained academic continuity through the COVID-19 pandemic</li>
           </ul>
           <div class="card-special">
-            <div class="card-special-title">&#10022; Context</div>
+            <div class="card-special-title">&#9670; Context</div>
             <div class="mentor-item">
               <div class="mentor-icon"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm1 14.93V15a1 1 0 00-2 0v1.93A8.001 8.001 0 014.07 11H6a1 1 0 000-2H4.07A8.001 8.001 0 0111 4.07V6a1 1 0 002 0V4.07A8.001 8.001 0 0119.93 11H18a1 1 0 000 2h1.93A8.001 8.001 0 0113 16.93z"/></svg></div>
-              <div><div class="mentor-name">A Period of Transition</div><div class="mentor-note">These two years served as a bridge — formal schooling as a checkpoint while real preparation for engineering college entrance was underway in parallel.</div></div>
+              <div>
+                <div class="mentor-name">A Period of Transition</div>
+                <div class="mentor-note">These two years served as a bridge — formal schooling as a checkpoint while real preparation for engineering college entrance was underway in parallel.</div>
+              </div>
             </div>
           </div>
         </div>
@@ -487,7 +471,7 @@
                 <tr><td>Mathematics</td><td class="score-cell">83</td></tr>
                 <tr><td>Biology</td><td class="score-cell">79</td></tr>
               </tbody>
-              <tfoot><tr class="total-row"><td>Aggregate</td><td class="score-cell" style="color:var(--accent)!important">84.5%</td></tr></tfoot>
+              <tfoot><tr class="total-row"><td>Aggregate</td><td class="score-cell">84.5%</td></tr></tfoot>
             </table>
           </div>
           <div>
@@ -508,29 +492,20 @@
       </div>
     </div>
 
-    <!-- ══ CONNECTOR 3: Mithila → Don Bosco ══ -->
+    <!-- CONNECTOR 3 -->
     <div class="path-connector" style="position:relative;">
-      <img src="resources/design elements/boat.png" class="decor-img c3-lake" alt=""/>
-
       <svg viewBox="0 0 960 220" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible;" xmlns="http://www.w3.org/2000/svg">
-        <path d="M 480,5 C 340,70 620,150 480,215"
-          fill="none" stroke="#b8860b" stroke-width="2.5"
-          stroke-dasharray="10,7" stroke-linecap="round" opacity="0.65"/>
-        <path d="M 480,5 C 340,70 620,150 480,215"
-          fill="none" stroke="rgba(184,134,11,0.12)" stroke-width="18" stroke-linecap="round"/>
-        <polygon points="0,-5 10,0 0,5" fill="#b8860b" opacity="0.7"
-          transform="translate(472,115) rotate(82)"/>
-        <circle cx="480" cy="5"   r="5" fill="none" stroke="#b8860b" stroke-width="1.8" opacity="0.55"/>
-        <circle cx="480" cy="215" r="5" fill="none" stroke="#b8860b" stroke-width="1.8" opacity="0.55"/>
-        <!-- small decorative wave -->
-        <path d="M 560,65 Q 610,95 595,135" fill="none" stroke="rgba(122,163,184,0.25)" stroke-width="1.5" stroke-dasharray="3,4"/>
+        <path d="M 480,5 C 340,70 620,150 480,215" fill="none" stroke="#C3E41D" stroke-width="2" stroke-dasharray="10,7" stroke-linecap="round" opacity="0.5"/>
+        <path d="M 480,5 C 340,70 620,150 480,215" fill="none" stroke="rgba(195,228,29,0.07)" stroke-width="20" stroke-linecap="round"/>
+        <polygon points="0,-5 10,0 0,5" fill="#C3E41D" opacity="0.6" transform="translate(472,115) rotate(82)"/>
+        <circle cx="480" cy="5"   r="4" fill="none" stroke="#C3E41D" stroke-width="1.5" opacity="0.5"/>
+        <circle cx="480" cy="215" r="4" fill="none" stroke="#C3E41D" stroke-width="1.5" opacity="0.5"/>
       </svg>
-
       <div class="year-node">2014 – 2019</div>
       <div class="path-annotation" style="left:55%;top:165px;">Patna, Bihar</div>
     </div>
 
-    <!-- ══ CARD 4: Don Bosco ══ -->
+    <!-- CARD 4: Don Bosco -->
     <div class="scene">
       <div class="detail-card" id="card-1">
         <div class="card-left">
@@ -539,7 +514,7 @@
           <div class="card-badge">Secondary Education</div>
           <h2 class="card-school-name">Don Bosco Academy</h2>
           <div class="card-location"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>Digha Ghat, Patna, Bihar</div>
-          <div class="card-years">Class VI &ndash; X &nbsp;&middot;&nbsp; 2014 &ndash; 2019</div>
+          <div class="card-years">Class VI &ndash; X &nbsp;·&nbsp; 2014 &ndash; 2019</div>
           <p class="card-desc">Five transformative years at this prestigious ICSE institution shaped me profoundly. Moving away from home to live as a boarder at Angelo Hostel, I learned independence, resilience, and the value of community. Beyond academics, I explored a wide range of extracurricular activities and discovered an unexpected talent for carrom.</p>
           <ul class="achievement-list">
             <li>Represented ICSE at the School Games Federation of India in carrom</li>
@@ -548,14 +523,20 @@
             <li>Participant, National ICSE Schools Carrom Championship</li>
           </ul>
           <div class="card-special">
-            <div class="card-special-title">&#10022; Special Mentions</div>
+            <div class="card-special-title">&#9670; Special Mentions</div>
             <div class="mentor-item">
               <div class="mentor-icon"><svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div>
-              <div><div class="mentor-name">Principal Mary Alphonsa ("Miss Thankma")</div><div class="mentor-note">Cared for every boarder like her own child — providing a home away from home during our most formative years.</div></div>
+              <div>
+                <div class="mentor-name">Principal Mary Alphonsa ("Miss Thankma")</div>
+                <div class="mentor-note">Cared for every boarder like her own child — providing a home away from home during our most formative years.</div>
+              </div>
             </div>
             <div class="mentor-item">
               <div class="mentor-icon"><svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div>
-              <div><div class="mentor-name">N.P. Sir</div><div class="mentor-note">Pushed beyond academic limits — teaching that true achievement lies in pursuing what seems impossible.</div></div>
+              <div>
+                <div class="mentor-name">N.P. Sir</div>
+                <div class="mentor-note">Pushed beyond academic limits — teaching that true achievement lies in pursuing what seems impossible.</div>
+              </div>
             </div>
           </div>
         </div>
@@ -572,7 +553,7 @@
                 <tr><td>Computer Studies</td><td class="score-cell">88</td></tr>
                 <tr><td>English Literature</td><td class="score-cell">76</td></tr>
               </tbody>
-              <tfoot><tr class="total-row"><td>Overall %</td><td class="score-cell" style="color:var(--accent)!important">80.09%</td></tr></tfoot>
+              <tfoot><tr class="total-row"><td>Overall %</td><td class="score-cell">80.09%</td></tr></tfoot>
             </table>
           </div>
           <div>
@@ -587,35 +568,26 @@
             <div class="key-fact"><div class="key-fact-label">Board</div><div class="key-fact-value">ICSE</div></div>
             <div class="key-fact"><div class="key-fact-label">Type</div><div class="key-fact-value">Boarder</div></div>
             <div class="key-fact"><div class="key-fact-label">ICSE Result</div><div class="key-fact-value hi">PASS</div></div>
-            <div class="key-fact"><div class="key-fact-label">Top Score</div><div class="key-fact-value hi">97 &mdash; CS</div></div>
+            <div class="key-fact"><div class="key-fact-label">Top Score</div><div class="key-fact-value hi">97 — CS</div></div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ══ CONNECTOR 4: Don Bosco → New Cambridge ══ -->
+    <!-- CONNECTOR 4 -->
     <div class="path-connector" style="position:relative;">
-      <img src="resources/design elements/compass.png" class="decor-img c4-compass" alt=""/>
-
       <svg viewBox="0 0 960 220" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible;" xmlns="http://www.w3.org/2000/svg">
-        <path d="M 480,5 C 560,70 400,145 480,215"
-          fill="none" stroke="#b8860b" stroke-width="2.5"
-          stroke-dasharray="10,7" stroke-linecap="round" opacity="0.65"/>
-        <path d="M 480,5 C 560,70 400,145 480,215"
-          fill="none" stroke="rgba(184,134,11,0.12)" stroke-width="18" stroke-linecap="round"/>
-        <polygon points="0,-5 10,0 0,5" fill="#b8860b" opacity="0.7"
-          transform="translate(476,112) rotate(-78)"/>
-        <circle cx="480" cy="5"   r="5" fill="none" stroke="#b8860b" stroke-width="1.8" opacity="0.55"/>
-        <circle cx="480" cy="215" r="5" fill="none" stroke="#b8860b" stroke-width="1.8" opacity="0.55"/>
-        <!-- rope-like decorative -->
-        <path d="M 300,40 Q 260,75 275,125 Q 290,175 255,195" fill="none" stroke="rgba(139,105,20,0.18)" stroke-width="1.5" stroke-dasharray="5,6"/>
+        <path d="M 480,5 C 560,70 400,145 480,215" fill="none" stroke="#C3E41D" stroke-width="2" stroke-dasharray="10,7" stroke-linecap="round" opacity="0.5"/>
+        <path d="M 480,5 C 560,70 400,145 480,215" fill="none" stroke="rgba(195,228,29,0.07)" stroke-width="20" stroke-linecap="round"/>
+        <polygon points="0,-5 10,0 0,5" fill="#C3E41D" opacity="0.6" transform="translate(476,112) rotate(-78)"/>
+        <circle cx="480" cy="5"   r="4" fill="none" stroke="#C3E41D" stroke-width="1.5" opacity="0.5"/>
+        <circle cx="480" cy="215" r="4" fill="none" stroke="#C3E41D" stroke-width="1.5" opacity="0.5"/>
       </svg>
-
       <div class="year-node">2008 – 2014</div>
       <div class="path-annotation" style="left:53%;top:160px;">Birpur, Bihar</div>
     </div>
 
-    <!-- ══ CARD 5: New Cambridge (oldest) ══ -->
+    <!-- CARD 5: New Cambridge -->
     <div class="scene">
       <div class="detail-card" id="card-0">
         <div class="card-left">
@@ -624,13 +596,16 @@
           <div class="card-badge">Primary Education</div>
           <h2 class="card-school-name">New Cambridge Residential School</h2>
           <div class="card-location"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>Birpur, Supaul, Bihar</div>
-          <div class="card-years">Nursery &ndash; Class V &nbsp;&middot;&nbsp; 2008 &ndash; 2014</div>
+          <div class="card-years">Nursery &ndash; Class V &nbsp;·&nbsp; 2008 &ndash; 2014</div>
           <p class="card-desc">The foundation of everything began here in my hometown. As a day scholar at this CBSE primary school, I spent my earliest years of formal education building curiosity, discipline, and a love for learning. These were the years of firsts — first examinations, first friendships, and first lessons in what it truly means to show up and try.</p>
           <div class="card-special">
-            <div class="card-special-title">&#10022; Special Mention</div>
+            <div class="card-special-title">&#9670; Special Mention</div>
             <div class="mentor-item">
               <div class="mentor-icon"><svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div>
-              <div><div class="mentor-name">Shri B.M. Malakar Sir</div><div class="mentor-note">Hindi &amp; Sanskrit teacher who instilled values of honesty, discipline, and cultural pride — lessons that outlast any textbook.</div></div>
+              <div>
+                <div class="mentor-name">Shri B.M. Malakar Sir</div>
+                <div class="mentor-note">Hindi &amp; Sanskrit teacher who instilled values of honesty, discipline, and cultural pride — lessons that outlast any textbook.</div>
+              </div>
             </div>
           </div>
         </div>
@@ -646,11 +621,11 @@
                 <tr><td>Hindi</td><td class="score-cell">85</td></tr>
                 <tr><td>G.K. (out of 50)</td><td class="score-cell">43</td></tr>
               </tbody>
-              <tfoot><tr class="total-row"><td>Total (550)</td><td class="score-cell" style="color:var(--accent)!important">507 &nbsp;&middot;&nbsp; Division A</td></tr></tfoot>
+              <tfoot><tr class="total-row"><td>Total (550)</td><td class="score-cell">507 &nbsp;·&nbsp; Division A</td></tr></tfoot>
             </table>
           </div>
           <div>
-            <div class="marks-section-title">Progress &middot; Class IV (2012&ndash;13)</div>
+            <div class="marks-section-title">Progress &middot; Class IV (2012–13)</div>
             <div class="stat-bar-row"><div class="stat-bar-label"><span>Hindi</span><span>94%</span></div><div class="stat-bar-track"><div class="stat-bar-fill" data-width="94"></div></div></div>
             <div class="stat-bar-row"><div class="stat-bar-label"><span>English</span><span>93%</span></div><div class="stat-bar-track"><div class="stat-bar-fill" data-width="93"></div></div></div>
             <div class="stat-bar-row"><div class="stat-bar-label"><span>Mathematics</span><span>85%</span></div><div class="stat-bar-track"><div class="stat-bar-fill" data-width="85"></div></div></div>
@@ -666,24 +641,23 @@
       </div>
     </div>
 
-    <!-- ══ TERMINAL: where the journey began ══ -->
+    <!-- TERMINAL -->
     <div style="position:relative;text-align:center;padding:3rem 2rem 0;pointer-events:none;z-index:2;">
       <svg viewBox="0 0 200 60" width="200" height="60" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto 1rem;">
-        <line x1="100" y1="0" x2="100" y2="35" stroke="#b8860b" stroke-width="2" stroke-dasharray="6,5" opacity="0.55"/>
-        <circle cx="100" cy="45" r="8" fill="none" stroke="#b8860b" stroke-width="2" opacity="0.6"/>
-        <circle cx="100" cy="45" r="3" fill="#b8860b" opacity="0.55"/>
+        <line x1="100" y1="0" x2="100" y2="35" stroke="#C3E41D" stroke-width="1.5" stroke-dasharray="6,5" opacity="0.4"/>
+        <circle cx="100" cy="45" r="8" fill="none" stroke="#C3E41D" stroke-width="1.5" opacity="0.4"/>
+        <circle cx="100" cy="45" r="3" fill="#C3E41D" opacity="0.4"/>
       </svg>
-      <div style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.22em;color:rgba(184,134,11,0.45);text-transform:uppercase;">Where it all began · 2008</div>
+      <div style="font-family:'Fira Code',monospace;font-size:0.62rem;letter-spacing:0.22em;color:rgba(195,228,29,0.35);text-transform:uppercase;">Where it all began · 2008</div>
     </div>
 
   </div><!-- end .journey-stream -->
 
   <div class="edu-footer"><a href="index.html">&larr; Back to Portfolio</a></div>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
   <script src="script.js"></script>
   <script>
-    /* ── Animate stat bars on scroll using IntersectionObserver ── */
+    /* Animate stat bars on scroll */
     function animateBars(container) {
       container.querySelectorAll('.stat-bar-fill').forEach(bar => {
         const w = bar.dataset.width;
@@ -691,19 +665,14 @@
         requestAnimationFrame(() => requestAnimationFrame(() => { bar.style.width = w + '%'; }));
       });
     }
-
-    const observer = new IntersectionObserver((entries) => {
+    const barObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          animateBars(entry.target);
-          observer.unobserve(entry.target);
-        }
+        if (entry.isIntersecting) { animateBars(entry.target); barObserver.unobserve(entry.target); }
       });
     }, { threshold: 0.2 });
+    document.querySelectorAll('.detail-card').forEach(card => barObserver.observe(card));
 
-    document.querySelectorAll('.detail-card').forEach(card => observer.observe(card));
-
-    /* ── Scroll-fade-in for cards ── */
+    /* Scroll fade-in for cards */
     const fadeObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -713,21 +682,12 @@
         }
       });
     }, { threshold: 0.08 });
-
     document.querySelectorAll('.detail-card').forEach(card => {
       card.style.opacity = '0';
       card.style.transform = 'translateY(32px)';
       card.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
       fadeObserver.observe(card);
     });
-
-    /* ── Parallax float for decor images on scroll ── */
-    window.addEventListener('scroll', () => {
-      const sy = window.scrollY;
-      document.querySelectorAll('.conn-ship-left, .conn-ship-right').forEach((el, i) => {
-        el.style.transform = `translateY(${Math.sin(sy * 0.003 + i) * 6}px)` + (el.classList.contains('conn-ship-right') ? ' scaleX(-1)' : '');
-      });
-    }, { passive: true });
   </script>
 </body>
 </html>
