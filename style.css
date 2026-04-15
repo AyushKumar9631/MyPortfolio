@@ -551,9 +551,12 @@ main { position: relative; z-index: 1; }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
+  body { cursor: auto; }
+  .cursor, .cursor-trail { display: none; }
   .navbar { padding: 1rem 1.5rem; }
-  .nav-links, .nav-cta { display: none; }
-  .hamburger { display: flex; }
+  .nav-links { display: none; }
+  .nav-cta { display: inline-flex; cursor: pointer; }
+  .hamburger { display: flex; cursor: pointer; margin-left: 0.6rem; }
   .hero { flex-direction: column-reverse; padding: 7rem 1.5rem 4rem; gap: 3rem; align-items: flex-start; }
   .hero-visual { flex: 0 0 auto; width: 100%; display: flex; justify-content: center; padding: 40px 30px 60px; }
   .profile-img-wrap { width: 280px; height: 340px; }

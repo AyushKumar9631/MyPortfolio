@@ -26,7 +26,37 @@
     .page-nav .nav-links a:hover, .page-nav .nav-links a.active { color: var(--accent); }
     .page-nav .nav-cta { font-family: 'Syne', sans-serif; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: #000; background: var(--accent); padding: 0.45rem 1.2rem; text-decoration: none; font-weight: 700; transition: opacity 0.2s; border-radius: 2px; }
     .page-nav .nav-cta:hover { opacity: 0.85; }
-    @media(max-width:768px){ .page-nav .nav-links { display: none; } }
+    /* ── HAMBURGER ── */
+    .page-nav .nav-right { display: flex; align-items: center; gap: 1.1rem; }
+    .page-nav .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .page-nav .hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--text-primary); border-radius: 1px; transition: all 0.3s ease;
+    }
+    /* ── PAGE MOBILE MENU ── */
+    .page-mobile-menu {
+      position: fixed; top: 60px; left: 0; right: 0; z-index: 99;
+      background: rgba(0,0,0,0.97); backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border-mid);
+      padding: 1.8rem 1.5rem;
+      opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
+    }
+    .page-mobile-menu.open { opacity: 1; pointer-events: all; }
+    .page-mobile-menu ul { display: flex; flex-direction: column; gap: 1.5rem; text-align: center; list-style: none; padding: 0; }
+    .page-mobile-menu ul a {
+      font-family: 'Syne', sans-serif; font-size: 0.85rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text-secondary); text-decoration: none; transition: color 0.2s;
+    }
+    .page-mobile-menu ul a:hover, .page-mobile-menu ul a.active { color: var(--accent); }
+    @media(max-width:768px){
+      body { cursor: auto; }
+      .cursor, .cursor-trail { display: none; }
+      .page-nav .nav-links { display: none; }
+      .page-nav .hamburger { display: flex; }
+    }
 
     /* ── PAGE WRAPPER ── */
     .page-wrapper { min-height: 100vh; padding-top: 72px; display: flex; flex-direction: column; }
@@ -258,8 +288,23 @@
     <li><a href="index.html#skills">Skills</a></li>
     <li><a href="index.html#responsibilities">Roles</a></li>
   </ul>
-  <a href="mailto:ayushkr1.ug23.cs@nitp.ac.in" class="nav-cta">Hire Me</a>
+  <div class="nav-right">
+    <a href="mailto:ayushkr1.ug23.cs@nitp.ac.in" class="nav-cta">Hire Me</a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
+
+<div class="page-mobile-menu" id="pageMobileMenu">
+  <ul>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="education.html">Education</a></li>
+    <li><a href="projects.html" class="active">Projects</a></li>
+    <li><a href="index.html#skills">Skills</a></li>
+    <li><a href="index.html#responsibilities">Roles</a></li>
+  </ul>
+</div>
 
 <div class="page-wrapper">
 
@@ -543,6 +588,18 @@ Doctor reviews  →  <span class="hl">Save Record</span></div>
 
 <script src="script.js"></script>
 <script>
+/* ── Mobile menu toggle ── */
+(function() {
+  const ham = document.getElementById('hamburger');
+  const menu = document.getElementById('pageMobileMenu');
+  if (ham && menu) {
+    ham.addEventListener('click', () => menu.classList.toggle('open'));
+    document.querySelectorAll('.page-mobile-menu a').forEach(a => {
+      a.addEventListener('click', () => menu.classList.remove('open'));
+    });
+  }
+})();
+
 (function() {
   const btns   = document.querySelectorAll('.tab-btn');
   const panels = document.querySelectorAll('.tab-panel');
